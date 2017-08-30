@@ -57,6 +57,9 @@ You can still use Illdy theme without this plugin but you won't be able to impor
 
 == Changelog ==
 
+= 1.0.6 = 
+* Portfolio URLs were not saving; bug fixed
+
 = 1.0.5 =
 * Improvements to support new Illdy theme version
 
