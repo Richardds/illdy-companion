@@ -31,7 +31,7 @@ class Illdy_Widget_Project extends WP_Widget {
 
         $lightbox = get_theme_mod( 'illdy_projects_lightbox', false );
 
-        $title = ( !empty( $instance['title'] ) ? esc_html( $instance['title'] ) : '' );
+        $title = ( !empty( $instance['title'] ) ? esc_attr( $instance['title'] ) : '' );
         $image = !empty( $instance['image'] ) ? esc_url( $instance['image'] ) : '';
         $url = !empty( $instance['url'] ) ? esc_url( $instance['url'] ) : '';
 

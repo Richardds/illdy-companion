@@ -70,7 +70,7 @@ class Illdy_Widget_Person extends WP_Widget {
         $title = ( !empty( $instance['title'] ) ? esc_html( $instance['title'] ) : '' );
         $image = !empty( $instance['image'] ) ? esc_url( $instance['image'] ) : '';
         $position = ( !empty( $instance['position'] ) ? esc_html( $instance['position'] ) : '' );
-        $entry = ( !empty( $instance['entry'] ) ? esc_html( $instance['entry'] ) : '' );
+        $entry = ( !empty( $instance['entry'] ) ? wp_kses_post( $instance['entry'] ) : '' );
         $facebook_url = !empty( $instance['facebook_url'] ) ? esc_url( $instance['facebook_url'] ) : '';
         $twitter_url = !empty( $instance['twitter_url'] ) ? esc_url( $instance['twitter_url'] ) : '';
         $linkedin_url = !empty( $instance['linkedin_url'] ) ? esc_url( $instance['linkedin_url'] ) : '';
@@ -113,7 +113,7 @@ class Illdy_Widget_Person extends WP_Widget {
         $title = ! empty( $instance['title'] ) ? sanitize_text_field( $instance['title'] ) : __( '[Illdy] - Person', 'illdy' );
         $image = !empty( $instance['image'] ) ? esc_url( $instance['image'] ) : esc_url( get_template_directory_uri() . '/layout/images/front-page/front-page-project-1.jpg' );
         $position = ! empty( $instance['position'] ) ? sanitize_text_field( $instance['position'] ) : '';
-        $entry = ! empty( $instance['entry'] ) ? sanitize_text_field( $instance['entry'] ) : '';
+        $entry = ! empty( $instance['entry'] ) ? wp_kses_post( $instance['entry'] ) : '';
         $facebook_url = !empty( $instance['facebook_url'] ) ? esc_url( $instance['facebook_url'] ) : '';
         $twitter_url = !empty( $instance['twitter_url'] ) ? esc_url( $instance['twitter_url'] ) : '';
         $linkedin_url = !empty( $instance['linkedin_url'] ) ? esc_url( $instance['linkedin_url'] ) : '';
@@ -178,7 +178,7 @@ class Illdy_Widget_Person extends WP_Widget {
         $instance['title'] = ( !empty( $new_instance['title'] ) ) ? esc_html( $new_instance['title'] ) : '';
         $instance['image'] = !empty( $new_instance['image'] ) ? esc_url( $new_instance['image'] ) : '';
         $instance['position'] = ( !empty( $new_instance['position'] ) ) ? esc_html( $new_instance['position'] ) : '';
-        $instance['entry'] = ( !empty( $new_instance['entry'] ) ) ? esc_html( $new_instance['entry'] ) : '';
+        $instance['entry'] = ( !empty( $new_instance['entry'] ) ) ? wp_kses_post( $new_instance['entry'] ) : '';
         $instance['facebook_url'] = ( !empty( $new_instance['facebook_url'] ) ? esc_url( $new_instance['facebook_url'] ) : '' );
         $instance['twitter_url'] = ( !empty( $new_instance['twitter_url'] ) ? esc_url( $new_instance['twitter_url'] ) : '' );
         $instance['linkedin_url'] = ( !empty( $new_instance['linkedin_url'] ) ? esc_url( $new_instance['linkedin_url'] ) : '' );

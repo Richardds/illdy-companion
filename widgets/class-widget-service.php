@@ -81,26 +81,10 @@ class Illdy_Widget_Service extends WP_Widget {
     public function widget( $args, $instance ) {
         echo $args['before_widget'];
 
-        $allowed_html = array(
-            'a' => array(
-                'href' => array(),
-                'title' => array()
-            ),
-            'br' => array(),
-            'em' => array(),
-            'img' => array(
-                'alt' => array(),
-                'src' => array(),
-                'srcset' => array(),
-                'title' => array()
-            ),
-            'strong' => array(),
-        );
-
-        $title = ( !empty( $instance['title'] ) ? esc_html( $instance['title'] ) : '' );
-        $icon  = ( !empty( $instance['icon'] ) ? esc_attr( $instance['icon'] ) : '' );
-        $entry = ( !empty( $instance['entry'] ) ? wp_kses( $instance['entry'], $allowed_html ) : '' );
-        $color = ( !empty( $instance['color'] ) ? esc_attr( $instance['color'] ) : '#0385d0' );
+        $title = ( ! empty( $instance['title'] ) ? wp_kses_post( $instance['title'] ) : '' );
+        $icon  = ( ! empty( $instance['icon'] ) ? esc_attr( $instance['icon'] ) : '' );
+        $entry = ( ! empty( $instance['entry'] ) ? wp_kses_post( $instance['entry'] ) : '' );
+        $color = ( ! empty( $instance['color'] ) ? esc_attr( $instance['color'] ) : '#0385d0' );
 
         $output = '';
 
@@ -733,24 +717,10 @@ class Illdy_Widget_Service extends WP_Widget {
     * @param array $instance Previously saved values from database.
     */
     public function form( $instance ) {
-        $allowed_html = array(
-            'a' => array(
-                'href' => array(),
-                'title' => array()
-            ),
-            'br' => array(),
-            'em' => array(),
-            'img' => array(
-                'alt' => array(),
-                'src' => array(),
-                'srcset' => array(),
-                'title' => array()
-            ),
-            'strong' => array(),
-        );
-        $title = ! empty( $instance['title'] ) ? sanitize_text_field( $instance['title'] ) : __( '[Illdy] - Skill', 'illdy' );
+
+        $title = ! empty( $instance['title'] ) ? wp_kses_post( $instance['title'] ) : __( '[Illdy] - Skill', 'illdy' );
         $icon = !empty( $instance['icon'] ) ? sanitize_text_field( $instance['icon'] ) : '';
-        $entry = !empty( $instance['entry'] ) ? wp_kses( $instance['entry'], $allowed_html ) : '';
+        $entry = !empty( $instance['entry'] ) ? wp_kses_post( $instance['entry'] ) : '';
         $color = !empty( $instance['color'] ) ? esc_attr( $instance['color'] ) : '';
 
         $get_fontawesome_icons = $this->get_fontawesome_icons();
@@ -773,7 +743,7 @@ class Illdy_Widget_Service extends WP_Widget {
 
         <p>
             <label for="<?php echo $this->get_field_id( 'entry' ); ?>"><?php _e( 'Entry:', 'illdy' ); ?></label>
-            <textarea class="widefat" rows="16" cols="20" id="<?php echo $this->get_field_id( 'entry' ); ?>" name="<?php echo $this->get_field_name( 'entry' ); ?>"><?php echo esc_textarea( $entry ); ?></textarea></p>
+            <textarea class="widefat" rows="16" cols="20" id="<?php echo $this->get_field_id( 'entry' ); ?>" name="<?php echo $this->get_field_name( 'entry' ); ?>"><?php echo wp_kses_post( $entry ); ?></textarea></p>
         </p>
 
         <p>
@@ -795,26 +765,10 @@ class Illdy_Widget_Service extends WP_Widget {
     */
     public function update( $new_instance, $old_instance ) {
 
-        $allowed_html = array(
-            'a' => array(
-                'href' => array(),
-                'title' => array()
-            ),
-            'br' => array(),
-            'em' => array(),
-            'img' => array(
-                'alt' => array(),
-                'src' => array(),
-                'srcset' => array(),
-                'title' => array()
-            ),
-            'strong' => array(),
-        );
-
         $instance = array();
-        $instance['title'] = ( !empty( $new_instance['title'] ) ) ? esc_html( $new_instance['title'] ) : '';
+        $instance['title'] = ( !empty( $new_instance['title'] ) ) ? wp_kses_post( $new_instance['title'] ) : '';
         $instance['icon'] = ( !empty( $new_instance['icon'] ) ? sanitize_text_field( $new_instance['icon'] ) : '' );
-        $instance['entry'] = ( !empty( $new_instance['entry'] ) ? wp_kses( $new_instance['entry'], $allowed_html ) : '' );
+        $instance['entry'] = ( !empty( $new_instance['entry'] ) ? wp_kses_post( $new_instance['entry'] ) : '' );
         $instance['color'] = ( !empty( $new_instance['color'] ) ? esc_html( $new_instance['color'] ) : '' );
 
         return $instance;

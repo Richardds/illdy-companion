@@ -84,7 +84,7 @@ class Illdy_Widget_Recent_Posts extends WP_Widget {
      */
     public function form( $instance ) {
         $display_title = !empty( $instance['display_title'] ) ? $instance['display_title'] : '';
-        $title = ! empty( $instance['title'] ) ? sanitize_text_field( $instance['title'] ) : __( '[Illdy] - Recent Posts', 'illdy' );
+        $title = ! empty( $instance['title'] ) ? wp_kses_post( $instance['title'] ) : __( '[Illdy] - Recent Posts', 'illdy' );
         $numberofposts = !empty( $instance['numberofposts'] ) ? absint( $instance['numberofposts'] ) : __( '4', 'illdy' );
         ?>
 
@@ -123,7 +123,7 @@ class Illdy_Widget_Recent_Posts extends WP_Widget {
     public function update( $new_instance, $old_instance ) {
         $instance = array();
         $instance['display_title'] = $new_instance['display_title'];
-        $instance['title'] = ( !empty( $new_instance['title'] ) ) ? esc_html( $new_instance['title'] ) : '';
+        $instance['title'] = ( !empty( $new_instance['title'] ) ) ? wp_kses_post( $new_instance['title'] ) : '';
         $instance['numberofposts'] = ( !empty( $new_instance['numberofposts'] ) ? absint( $new_instance['numberofposts'] ) : '' );
 
         return $instance;

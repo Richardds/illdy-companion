@@ -714,7 +714,7 @@ class Illdy_Widget_Skill extends WP_Widget {
     * @param array $instance Previously saved values from database.
     */
     public function form( $instance ) {
-        $title = ! empty( $instance['title'] ) ? sanitize_text_field( $instance['title'] ) : __( '[Illdy] - Skill', 'illdy' );
+        $title = ! empty( $instance['title'] ) ? wp_kses_post( $instance['title'] ) : __( '[Illdy] - Skill', 'illdy' );
         $percentage = !empty( $instance['percentage'] ) ? absint( $instance['percentage'] ) : '';
         $icon = !empty( $instance['icon'] ) ? esc_html( $instance['icon'] ) : '';
         $color = !empty( $instance['color'] ) ? esc_attr( $instance['color'] ) : '';
@@ -761,7 +761,7 @@ class Illdy_Widget_Skill extends WP_Widget {
     */
     public function update( $new_instance, $old_instance ) {
         $instance = array();
-        $instance['title'] = ( !empty( $new_instance['title'] ) ) ? esc_html( $new_instance['title'] ) : '';
+        $instance['title'] = ( !empty( $new_instance['title'] ) ) ? wp_kses_post( $new_instance['title'] ) : '';
         $instance['percentage'] = ( !empty( $new_instance['percentage'] ) ? absint( $new_instance['percentage'] ) : '' );
         $instance['icon'] = ( !empty( $new_instance['icon'] ) ? esc_html( $new_instance['icon'] ) : '' );
         $instance['color'] = ( !empty( $new_instance['color'] ) ? esc_html( $new_instance['color'] ) : '' );

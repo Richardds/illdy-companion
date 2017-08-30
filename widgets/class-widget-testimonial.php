@@ -33,7 +33,7 @@ class Illdy_Widget_Testimonial extends WP_Widget {
 
         $name = ( !empty( $instance['name'] ) ? esc_html( $instance['name'] ) : '' );
         $image = !empty( $instance['image'] ) ? esc_url( $instance['image'] ) : '';
-        $testimonial = !empty( $instance['testimonial'] ) ? sanitize_text_field( $instance['testimonial'] ) : '';
+        $testimonial = !empty( $instance['testimonial'] ) ? wp_kses_post( $instance['testimonial'] ) : '';
 
         $image_id = illdy_get_image_id_from_image_url( $image );
         $get_attachment_image_src = wp_get_attachment_image_src( $image_id, 'illdy-front-page-projects' );
@@ -68,7 +68,7 @@ class Illdy_Widget_Testimonial extends WP_Widget {
     public function form( $instance ) {
         $name = !empty( $instance['name'] ) ? sanitize_text_field( $instance['name'] ) : '';
         $image = !empty( $instance['image'] ) ? esc_url( $instance['image'] ) : '';
-        $testimonial = !empty( $instance['testimonial'] ) ? sanitize_text_field( $instance['testimonial'] ) : '';
+        $testimonial = !empty( $instance['testimonial'] ) ? wp_kses_post( $instance['testimonial'] ) : '';
         ?>
         <p>
             <label for="<?php echo $this->get_field_id( 'name' ); ?>"><?php _e( 'Name:', 'illdy' ); ?></label>
@@ -84,7 +84,7 @@ class Illdy_Widget_Testimonial extends WP_Widget {
         <p>
             <label for="<?php echo $this->get_field_id( 'testimonial' ); ?>"><?php _e( 'Testimonial:', 'illdy' ); ?></label>
             <textarea class="widefat" id="<?php echo $this->get_field_id( 'testimonial' ); ?>" name="<?php echo $this->get_field_name( 'testimonial' ); ?>">
-                    <?php echo esc_attr( $testimonial ); ?>
+                    <?php echo wp_kses_post( $testimonial ); ?>
             </textarea>
         </p>
         <?php 
@@ -104,7 +104,7 @@ class Illdy_Widget_Testimonial extends WP_Widget {
         $instance = array();
         $instance['name'] = ( !empty( $new_instance['name'] ) ) ? esc_html( $new_instance['name'] ) : '';
         $instance['image'] = !empty( $new_instance['image'] ) ? esc_url( $new_instance['image'] ) : '';
-        $instance['testimonial'] = ( !empty( $new_instance['testimonial'] ) ? esc_html( $new_instance['testimonial'] ) : '' );
+        $instance['testimonial'] = ( !empty( $new_instance['testimonial'] ) ? wp_kses_post( $new_instance['testimonial'] ) : '' );
 
         return $instance;
     }
