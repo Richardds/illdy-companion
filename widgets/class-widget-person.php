@@ -67,32 +67,35 @@ class Illdy_Widget_Person extends WP_Widget {
     public function widget( $args, $instance ) {
         echo $args['before_widget'];
 
-        $title = ( !empty( $instance['title'] ) ? esc_html( $instance['title'] ) : '' );
-        $image = !empty( $instance['image'] ) ? esc_url( $instance['image'] ) : '';
-        $position = ( !empty( $instance['position'] ) ? esc_html( $instance['position'] ) : '' );
-        $entry = ( !empty( $instance['entry'] ) ? wp_kses_post( $instance['entry'] ) : '' );
-        $facebook_url = !empty( $instance['facebook_url'] ) ? esc_url( $instance['facebook_url'] ) : '';
-        $twitter_url = !empty( $instance['twitter_url'] ) ? esc_url( $instance['twitter_url'] ) : '';
-        $linkedin_url = !empty( $instance['linkedin_url'] ) ? esc_url( $instance['linkedin_url'] ) : '';
-        $color = ( !empty( $instance['color'] ) ? esc_attr( $instance['color'] ) : '#000000' );
+        $defaults = array(
+            'title' => '',
+            'image' => '',
+            'position' => '',
+            'entry' => '',
+            'facebook_url' => '',
+            'twitter_url' => '',
+            'linkedin_url' => '',
+            'color' => '#000000',
+        );
+        $instance = wp_parse_args( $instance, $defaults );
 
-        $image_id = illdy_get_image_id_from_image_url( $image );
+        $image_id = illdy_get_image_id_from_image_url( $instance['image'] );
         $get_attachment_image_src = wp_get_attachment_image_src( $image_id, 'illdy-front-page-person' );
 
         $output = '';
 
-        $output .= '<div class="person clearfix" data-person-color="'. $color .'">';
+        $output .= '<div class="person clearfix" data-person-color="'. esc_attr( $instance['color'] ) .'">';
             $output .= '<div class="person-image">';
-                $output .= ( $image_id ? '<img src="'. $get_attachment_image_src[0] .'" alt="'. $title .'" title="'. $title .'" />' : ( $image ? '<img src="'. $image .'" alt="'. $title .'" title="'. $title .'" />' : '' ) );
+                $output .= ( $image_id ? '<img src="'. $get_attachment_image_src[0] .'" alt="'. esc_attr( $instance['title'] ) .'" title="'. esc_attr( $instance['title'] ) .'" />' : ( $instance['image'] ? '<img src="'. $instance['image'] .'" alt="'. esc_attr( $instance['title'] ) .'" title="'. esc_html( $instance['title'] ) .'" />' : '' ) );
             $output .= '</div><!--/.person-image-->';
             $output .= '<div class="person-content">';
-                $output .= '<h6>'. $title .'</h6>';
-                $output .= '<p class="person-position">'. $position .'</p>';
-                $output .= '<p>'. $entry .'</p>';
+                $output .= '<h6>'. esc_html( $instance['title'] ) .'</h6>';
+                $output .= '<p class="person-position">'. esc_html( $instance['position'] ) .'</p>';
+                $output .= '<p>'. wp_kses_post( $instance['entry'] ) .'</p>';
                 $output .= '<ul class="person-content-social clearfix">';
-                    $output .= ( $facebook_url ) ? '<li><a href="'. $facebook_url .'" title="'. __( 'Facebook', 'illdy' ) .'" target="_blank" rel="nofollow"><i class="fa fa-facebook"></i></a></li>' : '';
-                    $output .= ( $twitter_url ) ? '<li><a href="'. $twitter_url .'" title="'. __( 'Twitter', 'illdy' ) .'"><i class="fa fa-twitter" target="_blank" rel="nofollow"></i></a></li>' : '';
-                    $output .= ( $linkedin_url ) ? '<li><a href="'. $linkedin_url .'" title="'. __( 'LinkedIn', 'illdy' ) .'"><i class="fa fa-linkedin" target="_blank" rel="nofollow"></i></a></li>' : '';
+                    $output .= ( $instance['facebook_url'] ) ? '<li><a href="'. esc_url( $instance['facebook_url'] ) .'" title="'. __( 'Facebook', 'illdy' ) .'" target="_blank" rel="nofollow"><i class="fa fa-facebook"></i></a></li>' : '';
+                    $output .= ( $instance['twitter_url'] ) ? '<li><a href="'. esc_url( $instance['twitter_url'] ) .'" title="'. __( 'Twitter', 'illdy' ) .'"><i class="fa fa-twitter" target="_blank" rel="nofollow"></i></a></li>' : '';
+                    $output .= ( $instance['linkedin_url'] ) ? '<li><a href="'. esc_url( $instance['linkedin_url'] ) .'" title="'. __( 'LinkedIn', 'illdy' ) .'"><i class="fa fa-linkedin" target="_blank" rel="nofollow"></i></a></li>' : '';
                 $output .= '</ul><!--/.person-content-social.clearfix-->';
             $output .= '</div><!--/.person-content-->';
         $output .= '</div><!--/.person.clearfix-->';
@@ -110,55 +113,60 @@ class Illdy_Widget_Person extends WP_Widget {
      * @param array $instance Previously saved values from database.
      */
     public function form( $instance ) {
-        $title = ! empty( $instance['title'] ) ? sanitize_text_field( $instance['title'] ) : __( '[Illdy] - Person', 'illdy' );
-        $image = !empty( $instance['image'] ) ? esc_url( $instance['image'] ) : esc_url( get_template_directory_uri() . '/layout/images/front-page/front-page-project-1.jpg' );
-        $position = ! empty( $instance['position'] ) ? sanitize_text_field( $instance['position'] ) : '';
-        $entry = ! empty( $instance['entry'] ) ? wp_kses_post( $instance['entry'] ) : '';
-        $facebook_url = !empty( $instance['facebook_url'] ) ? esc_url( $instance['facebook_url'] ) : '';
-        $twitter_url = !empty( $instance['twitter_url'] ) ? esc_url( $instance['twitter_url'] ) : '';
-        $linkedin_url = !empty( $instance['linkedin_url'] ) ? esc_url( $instance['linkedin_url'] ) : '';
-        $color = !empty( $instance['color'] ) ? esc_attr( $instance['color'] ) : '';
+
+        $defaults = array(
+            'title' => __( '[Illdy] - Person', 'illdy' ),
+            'image' => get_template_directory_uri() . '/layout/images/front-page/front-page-project-1.jpg',
+            'position' => '',
+            'entry' => '',
+            'facebook_url' => '',
+            'twitter_url' => '',
+            'linkedin_url' => '',
+            'color' => '#000000',
+        );
+        $instance = wp_parse_args( $instance, $defaults );
+
         ?>
 
         <p>
             <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'illdy' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $instance['title'] ); ?>">
         </p>
 
         <p>
             <label for="<?php echo $this->get_field_name( 'image' ); ?>"><?php _e( 'Image:', 'illdy' ); ?></label>
-            <input type="text" class="widefat custom_media_url_<?php echo $this->get_field_id( 'image' ); ?>" name="<?php echo $this->get_field_name( 'image' ); ?>" id="<?php echo $this->get_field_id( 'image' ); ?>" value="<?php if( !empty( $instance['image'] ) ): echo $instance['image']; else: get_template_directory_uri() . '/layout/images/front-page/front-page-project-1.jpg'; endif; ?>" style="margin-top:5px;">
+            <input type="text" class="widefat custom_media_url_<?php echo $this->get_field_id( 'image' ); ?>" name="<?php echo $this->get_field_name( 'image' ); ?>" id="<?php echo $this->get_field_id( 'image' ); ?>" value="<?php echo $instance['image'] ?>" style="margin-top:5px;">
             <input type="button" class="button button-primary custom_media_button" id="custom_media_button_service" data-fieldid="<?php echo $this->get_field_id( 'image' ); ?>" name="<?php echo $this->get_field_name( 'image' ); ?>" value="<?php _e( 'Upload Image','illdy' ); ?>" style="margin-top: 5px;">
         </p>
 
         <p>
             <label for="<?php echo $this->get_field_id( 'position' ); ?>"><?php _e( 'Position:', 'illdy' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'position' ); ?>" name="<?php echo $this->get_field_name( 'position' ); ?>" type="text" value="<?php echo esc_attr( $position ); ?>">
+            <input class="widefat" id="<?php echo $this->get_field_id( 'position' ); ?>" name="<?php echo $this->get_field_name( 'position' ); ?>" type="text" value="<?php echo esc_attr( $instance['position'] ); ?>">
         </p>
 
         <p>
             <label for="<?php echo $this->get_field_id( 'entry' ); ?>"><?php _e( 'Entry:', 'illdy' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'entry' ); ?>" name="<?php echo $this->get_field_name( 'entry' ); ?>" type="text" value="<?php echo esc_attr( $entry ); ?>">
+            <input class="widefat" id="<?php echo $this->get_field_id( 'entry' ); ?>" name="<?php echo $this->get_field_name( 'entry' ); ?>" type="text" value="<?php echo esc_attr( $instance['entry'] ); ?>">
         </p>
 
         <p>
             <label for="<?php echo $this->get_field_id( 'facebook_url' ); ?>"><?php _e( 'Facebook URL:', 'illdy' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'facebook_url' ); ?>" name="<?php echo $this->get_field_name( 'facebook_url' ); ?>" type="text" value="<?php echo esc_attr( $facebook_url ); ?>">
+            <input class="widefat" id="<?php echo $this->get_field_id( 'facebook_url' ); ?>" name="<?php echo $this->get_field_name( 'facebook_url' ); ?>" type="text" value="<?php echo esc_attr( $instance['facebook_url'] ); ?>">
         </p>
 
         <p>
             <label for="<?php echo $this->get_field_id( 'twitter_url' ); ?>"><?php _e( 'Twitter URL:', 'illdy' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'twitter_url' ); ?>" name="<?php echo $this->get_field_name( 'twitter_url' ); ?>" type="text" value="<?php echo esc_attr( $twitter_url ); ?>">
+            <input class="widefat" id="<?php echo $this->get_field_id( 'twitter_url' ); ?>" name="<?php echo $this->get_field_name( 'twitter_url' ); ?>" type="text" value="<?php echo esc_attr( $instance['twitter_url'] ); ?>">
         </p>
 
         <p>
             <label for="<?php echo $this->get_field_id( 'linkedin_url' ); ?>"><?php _e( 'LinkedIn URL:', 'illdy' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'linkedin_url' ); ?>" name="<?php echo $this->get_field_name( 'linkedin_url' ); ?>" type="text" value="<?php echo esc_attr( $linkedin_url ); ?>">
+            <input class="widefat" id="<?php echo $this->get_field_id( 'linkedin_url' ); ?>" name="<?php echo $this->get_field_name( 'linkedin_url' ); ?>" type="text" value="<?php echo esc_attr( $instance['linkedin_url'] ); ?>">
         </p>
 
         <p>
             <label for="<?php echo $this->get_field_id( 'color' ); ?>"><?php _e( 'Color:', 'illdy' ); ?></label><br>
-            <input type="text" name="<?php echo $this->get_field_name( 'color' ); ?>" class="color-picker" id="<?php echo $this->get_field_id( 'color' ); ?>" value="<?php echo $color; ?>" data-default-color="#000000" />
+            <input type="text" name="<?php echo $this->get_field_name( 'color' ); ?>" class="color-picker" id="<?php echo $this->get_field_id( 'color' ); ?>" value="<?php echo esc_attr( $instance['color'] ); ?>" data-default-color="#000000" />
         </p>
         <?php 
     }
@@ -175,14 +183,14 @@ class Illdy_Widget_Person extends WP_Widget {
      */
     public function update( $new_instance, $old_instance ) {
         $instance = array();
-        $instance['title'] = ( !empty( $new_instance['title'] ) ) ? esc_html( $new_instance['title'] ) : '';
-        $instance['image'] = !empty( $new_instance['image'] ) ? esc_url( $new_instance['image'] ) : '';
-        $instance['position'] = ( !empty( $new_instance['position'] ) ) ? esc_html( $new_instance['position'] ) : '';
+        $instance['title'] = ( !empty( $new_instance['title'] ) ) ? sanitize_text_field( $new_instance['title'] ) : '';
+        $instance['image'] = !empty( $new_instance['image'] ) ? esc_url_raw( $new_instance['image'] ) : '';
+        $instance['position'] = ( !empty( $new_instance['position'] ) ) ? sanitize_text_field( $new_instance['position'] ) : '';
         $instance['entry'] = ( !empty( $new_instance['entry'] ) ) ? wp_kses_post( $new_instance['entry'] ) : '';
-        $instance['facebook_url'] = ( !empty( $new_instance['facebook_url'] ) ? esc_url( $new_instance['facebook_url'] ) : '' );
-        $instance['twitter_url'] = ( !empty( $new_instance['twitter_url'] ) ? esc_url( $new_instance['twitter_url'] ) : '' );
-        $instance['linkedin_url'] = ( !empty( $new_instance['linkedin_url'] ) ? esc_url( $new_instance['linkedin_url'] ) : '' );
-        $instance['color'] = ( !empty( $new_instance['color'] ) ? esc_html( $new_instance['color'] ) : '' );
+        $instance['facebook_url'] = ( !empty( $new_instance['facebook_url'] ) ? esc_url_raw( $new_instance['facebook_url'] ) : '' );
+        $instance['twitter_url'] = ( !empty( $new_instance['twitter_url'] ) ? esc_url_raw( $new_instance['twitter_url'] ) : '' );
+        $instance['linkedin_url'] = ( !empty( $new_instance['linkedin_url'] ) ? esc_url_raw( $new_instance['linkedin_url'] ) : '' );
+        $instance['color'] = ( !empty( $new_instance['color'] ) ? sanitize_text_field( $new_instance['color'] ) : '' );
 
         return $instance;
     }

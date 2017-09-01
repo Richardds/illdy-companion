@@ -26,19 +26,21 @@ class Illdy_Widget_Recent_Posts extends WP_Widget {
     public function widget( $args, $instance ) {
         echo $args['before_widget'];
 
-        $display_title = !empty( $instance['display_title'] ) ? $instance['display_title'] : '';
-        $numberofposts = !empty( $instance['numberofposts'] ) ? absint( $instance['numberofposts'] ) : '';
+        $defaults = array(
+            'title' => '',
+            'display_title' => '',
+            'numberofposts' => 4,
+        );
+        $instance = wp_parse_args( $instance, $defaults );
 
-        if( $display_title ) {
-            if ( !empty( $instance['title'] ) ) {
-                echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
-            }
+        if( $instance['display_title'] ) {
+            echo $args['before_title'] . esc_html( $instance['title'] ). $args['after_title'];
         }
 
         $post_query_args = array (
-            'post_type'              => array( 'post' ),
+            'post_type'              => 'post',
             'pagination'             => false,
-            'posts_per_page'         => $numberofposts,
+            'posts_per_page'         => absint( $instance['numberofposts'] ),
             'ignore_sticky_posts'    => true,
             'cache_results'          => true,
             'update_post_meta_cache' => true,
@@ -53,9 +55,7 @@ class Illdy_Widget_Recent_Posts extends WP_Widget {
 
                 global $post;
 
-                $output = '';
-
-                $output .= '<div class="widget-recent-post clearfix">';
+                $output = '<div class="widget-recent-post clearfix">';
                     $output .= ( has_post_thumbnail( $post->ID ) ? '<div class="recent-post-image">' : '' );
                         $output .= ( has_post_thumbnail( $post->ID ) ? get_the_post_thumbnail( $post->ID, 'illdy-widget-recent-posts' ) : '' );
                     $output .= ( has_post_thumbnail( $post->ID ) ? '</div><!--/.recent-post-image-->' : '' );
@@ -83,9 +83,14 @@ class Illdy_Widget_Recent_Posts extends WP_Widget {
      * @param array $instance Previously saved values from database.
      */
     public function form( $instance ) {
-        $display_title = !empty( $instance['display_title'] ) ? $instance['display_title'] : '';
-        $title = ! empty( $instance['title'] ) ? wp_kses_post( $instance['title'] ) : __( '[Illdy] - Recent Posts', 'illdy' );
-        $numberofposts = !empty( $instance['numberofposts'] ) ? absint( $instance['numberofposts'] ) : __( '4', 'illdy' );
+
+        $defaults = array(
+            'title' => __( '[Illdy] - Recent Posts', 'illdy' ),
+            'display_title' => '',
+            'numberofposts' => 4,
+        );
+        $instance = wp_parse_args( $instance, $defaults );
+
         ?>
 
         <div class="checkbox_switch" style="margin-top:15px;margin-bottom: 0;">
@@ -93,19 +98,19 @@ class Illdy_Widget_Recent_Posts extends WP_Widget {
             <div class="onoffswitch">
                 <input type="checkbox" id="<?php echo $this->get_field_id( 'display_title' ); ?>"
                        name="<?php echo $this->get_field_name( 'display_title' ); ?>" class="onoffswitch-checkbox"
-                       value="1" <?php checked( $display_title ); ?>>
+                       value="1" <?php checked( $instance['display_title'] ); ?>>
                 <label class="onoffswitch-label" for="<?php echo $this->get_field_id( 'display_title' ); ?>"></label>
             </div>
         </div>
 
         <p>
             <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'illdy' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $instance['title'] ); ?>">
         </p>
 
         <p>
             <label for="<?php echo $this->get_field_id( 'numberofposts' ); ?>"><?php _e( 'Number of posts:', 'illdy' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'numberofposts' ); ?>" name="<?php echo $this->get_field_name( 'numberofposts' ); ?>" type="number" value="<?php echo esc_attr( $numberofposts ); ?>">
+            <input class="widefat" id="<?php echo $this->get_field_id( 'numberofposts' ); ?>" name="<?php echo $this->get_field_name( 'numberofposts' ); ?>" type="number" value="<?php echo esc_attr( $instance['numberofposts'] ); ?>">
         </p>
         <?php 
     }

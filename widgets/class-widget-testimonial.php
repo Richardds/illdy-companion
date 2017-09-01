@@ -31,24 +31,27 @@ class Illdy_Widget_Testimonial extends WP_Widget {
 
         $lightbox = get_theme_mod( 'illdy_projects_lightbox', false );
 
-        $name = ( !empty( $instance['name'] ) ? esc_html( $instance['name'] ) : '' );
-        $image = !empty( $instance['image'] ) ? esc_url( $instance['image'] ) : '';
-        $testimonial = !empty( $instance['testimonial'] ) ? wp_kses_post( $instance['testimonial'] ) : '';
+        $defaults = array(
+            'name' => '',
+            'image' => '',
+            'testimonial' => '',
+        );
+        $instance = wp_parse_args( $instance, $defaults );
 
-        $image_id = illdy_get_image_id_from_image_url( $image );
+        $image_id = illdy_get_image_id_from_image_url( $instance['image'] );
         $get_attachment_image_src = wp_get_attachment_image_src( $image_id, 'illdy-front-page-projects' );
 
         ?>
 
         <div class="carousel-testimonial">
             <div class="testimonial-image">
-                <img src="<?php echo $image_id ? esc_url( $get_attachment_image_src[0] ) : $image ?>">
+                <img src="<?php echo $image_id ? esc_url( $get_attachment_image_src[0] ) : esc_url( $instance['image'] ) ?>">
             </div><!--/.testimonial-image-->
             <div class="testimonial-content">
-                <blockquote><q><?php echo $testimonial; ?></q></blockquote>
+                <blockquote><q><?php echo wp_kses_post( $instance['testimonial'] ); ?></q></blockquote>
             </div><!--/.testimonial-content-->
             <div class="testimonial-meta">
-                <h6><?php echo $name; ?></h6>
+                <h6><?php echo esc_html( $instance['name'] ); ?></h6>
             </div><!--/.testimonial-meta-->
         </div><!--/.carousel-testimonial-->
 
@@ -66,25 +69,29 @@ class Illdy_Widget_Testimonial extends WP_Widget {
      * @param array $instance Previously saved values from database.
      */
     public function form( $instance ) {
-        $name = !empty( $instance['name'] ) ? sanitize_text_field( $instance['name'] ) : '';
-        $image = !empty( $instance['image'] ) ? esc_url( $instance['image'] ) : '';
-        $testimonial = !empty( $instance['testimonial'] ) ? wp_kses_post( $instance['testimonial'] ) : '';
+        $defaults = array(
+            'name' => '',
+            'image' => get_template_directory_uri() . '/layout/images/front-page/front-page-project-1.jpg',
+            'testimonial' => '',
+        );
+        $instance = wp_parse_args( $instance, $defaults );
+
         ?>
         <p>
             <label for="<?php echo $this->get_field_id( 'name' ); ?>"><?php _e( 'Name:', 'illdy' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'name' ); ?>" name="<?php echo $this->get_field_name( 'name' ); ?>" type="text" value="<?php echo esc_attr( $name ); ?>">
+            <input class="widefat" id="<?php echo $this->get_field_id( 'name' ); ?>" name="<?php echo $this->get_field_name( 'name' ); ?>" type="text" value="<?php echo esc_attr( $instance['name'] ); ?>">
         </p>
 
         <p>
             <label for="<?php echo $this->get_field_name( 'image' ); ?>"><?php _e( 'Image:', 'illdy' ); ?></label>
-            <input type="text" class="widefat custom_media_url_<?php echo $this->get_field_id( 'image' ); ?>" name="<?php echo $this->get_field_name( 'image' ); ?>" id="<?php echo $this->get_field_id( 'image' ); ?>" value="<?php if( !empty( $instance['image'] ) ): echo $instance['image']; else: get_template_directory_uri() . '/layout/images/front-page/front-page-project-1.jpg'; endif; ?>" style="margin-top:5px;">
+            <input type="text" class="widefat custom_media_url_<?php echo $this->get_field_id( 'image' ); ?>" name="<?php echo $this->get_field_name( 'image' ); ?>" id="<?php echo $this->get_field_id( 'image' ); ?>" value="<?php echo esc_attr( $instance['image'] ) ?>" style="margin-top:5px;">
             <input type="button" class="button button-primary custom_media_button" id="custom_media_button_service" data-fieldid="<?php echo $this->get_field_id( 'image' ); ?>" name="<?php echo $this->get_field_name( 'image' ); ?>" value="<?php _e( 'Upload Image','illdy' ); ?>" style="margin-top: 5px;">
         </p>
 
         <p>
             <label for="<?php echo $this->get_field_id( 'testimonial' ); ?>"><?php _e( 'Testimonial:', 'illdy' ); ?></label>
             <textarea class="widefat" id="<?php echo $this->get_field_id( 'testimonial' ); ?>" name="<?php echo $this->get_field_name( 'testimonial' ); ?>">
-                    <?php echo wp_kses_post( $testimonial ); ?>
+                    <?php echo wp_kses_post( $instance['testimonial'] ); ?>
             </textarea>
         </p>
         <?php 
@@ -102,8 +109,8 @@ class Illdy_Widget_Testimonial extends WP_Widget {
      */
     public function update( $new_instance, $old_instance ) {
         $instance = array();
-        $instance['name'] = ( !empty( $new_instance['name'] ) ) ? esc_html( $new_instance['name'] ) : '';
-        $instance['image'] = !empty( $new_instance['image'] ) ? esc_url( $new_instance['image'] ) : '';
+        $instance['name'] = ( !empty( $new_instance['name'] ) ) ? sanitize_text_field( $new_instance['name'] ) : '';
+        $instance['image'] = !empty( $new_instance['image'] ) ? esc_url_raw( $new_instance['image'] ) : '';
         $instance['testimonial'] = ( !empty( $new_instance['testimonial'] ) ? wp_kses_post( $new_instance['testimonial'] ) : '' );
 
         return $instance;

@@ -20,27 +20,31 @@ class Illdy_Widget_Parallax extends WP_Widget
         wp_enqueue_script('epsilon-object', plugins_url('/js/epsilon.js', dirname(__FILE__)), array('jquery'));
     }
     function widget($args, $instance)
-    {
-        extract($args);
-        $title = isset($instance['title']) ? $instance['title'] : '';
-        $image_src = isset($instance['image_src']) ? $instance['image_src'] : '';
-        $image_pos = isset($instance['image_pos']) ? $instance['image_pos'] : esc_html__('left', 'illdy');
-        $body_content = isset($instance['body_content']) ? $instance['body_content'] : '';
-        $button1 = isset($instance['button1']) ? $instance['button1'] : '';
-        $button2 = isset($instance['button2']) ? $instance['button2'] : '';
-        $button1_link = isset($instance['button1_link']) ? $instance['button1_link'] : '';
-        $button2_link = isset($instance['button2_link']) ? $instance['button2_link'] : '';
-        $border_bottom = isset($instance['border_bottom']) ? $instance['border_bottom'] : '';
-        echo $before_widget;
+    {   
+
+        $defaults = array(
+            'title' => '',
+            'image_src' => '',
+            'image_pos' => 'left',
+            'body_content' => '',
+            'button1' => '',
+            'button2' => '',
+            'button1_link' => '',
+            'button2_link' => '',
+            'border_bottom' => '',
+        );
+        $instance = wp_parse_args( $instance, $defaults );
+
+        echo $args['before_widget'];
         /* Classes */
-        $class1 = ($image_pos == 'background-full') ? 'cover fullscreen image-bg' : (($image_pos == 'background-small') ? 'small-screen image-bg p0' : (($image_pos == 'right') ? 'bg-secondary' : (($image_pos == 'bottom') ? 'bg-secondary pb0' : '')));
-        $class2 = (($image_pos == 'background-full') || ($image_pos == 'background-small')) ? 'top-parallax-section' : (($image_pos == 'right') ? 'col-md-4 col-sm-5 mb-xs-24' : (($image_pos == 'left') ? 'col-md-4 col-md-offset-1 col-sm-5 col-sm-offset-1' : (($image_pos == 'bottom') ? 'col-sm-10 col-sm-offset-1 text-center' : (($image_pos == 'top') ? 'col-sm-10 col-sm-offset-1 text-center mt30' : ''))));
-        $class3 = (($image_pos == 'background-full') || ($image_pos == 'background-small')) ? 'col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 text-center' : '';
-        $class4 = ($image_pos == 'left' || $image_pos == 'right') ? 'row align-children' : 'row';
-        $class5 = ($image_pos == 'right') ? 'col-md-7 col-md-offset-1 col-sm-6 col-sm-offset-1 text-center' : '';
-        $class6 = ($image_pos == 'left') ? 'col-md-7 col-sm-6 text-center mb-xs-24' : '';
-        $class7 = ($image_pos == 'background-full') ? 'fullscreen' : '';
-        if ($border_bottom == 'on') {
+        $class1 = ($instance['image_pos'] == 'background-full') ? 'cover fullscreen image-bg' : (($instance['image_pos'] == 'background-small') ? 'small-screen image-bg p0' : (($instance['image_pos'] == 'right') ? 'bg-secondary' : (($instance['image_pos'] == 'bottom') ? 'bg-secondary pb0' : '')));
+        $class2 = (($instance['image_pos'] == 'background-full') || ($instance['image_pos'] == 'background-small')) ? 'top-parallax-section' : (($instance['image_pos'] == 'right') ? 'col-md-4 col-sm-5 mb-xs-24' : (($instance['image_pos'] == 'left') ? 'col-md-4 col-md-offset-1 col-sm-5 col-sm-offset-1' : (($instance['image_pos'] == 'bottom') ? 'col-sm-10 col-sm-offset-1 text-center' : (($instance['image_pos'] == 'top') ? 'col-sm-10 col-sm-offset-1 text-center mt30' : ''))));
+        $class3 = (($instance['image_pos'] == 'background-full') || ($instance['image_pos'] == 'background-small')) ? 'col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 text-center' : '';
+        $class4 = ($instance['image_pos'] == 'left' || $instance['image_pos'] == 'right') ? 'row align-children' : 'row';
+        $class5 = ($instance['image_pos'] == 'right') ? 'col-md-7 col-md-offset-1 col-sm-6 col-sm-offset-1 text-center' : '';
+        $class6 = ($instance['image_pos'] == 'left') ? 'col-md-7 col-sm-6 text-center mb-xs-24' : '';
+        $class7 = ($instance['image_pos'] == 'background-full') ? 'fullscreen' : '';
+        if ( 'on' == $instance['border_bottom'] ) {
             $class1 .= ' border-bottom';
         }
         /**
@@ -48,10 +52,10 @@ class Illdy_Widget_Parallax extends WP_Widget
          */
         ?>
         <section class="<?php echo esc_attr($class1); ?>"><?php
-            if (($image_pos == 'background-full' || $image_pos == 'background-small') && $image_src != '') { ?>
+            if (($instance['image_pos'] == 'background-full' || $instance['image_pos'] == 'background-small') && $instance['image_src'] != '') { ?>
             <div class="parallax-window <?php echo esc_attr($class7); ?>" data-parallax="scroll"
-                 data-image-src="<?php echo esc_url($image_src); ?>">
-                <div class="<?php echo ($image_pos == 'background-full') ? 'align-transform' : ''; ?>">
+                 data-image-src="<?php echo esc_url( $instance['image_src'] ); ?>">
+                <div class="<?php echo ($instance['image_pos'] == 'background-full') ? 'align-transform' : ''; ?>">
                     <?php } else { ?>
                     <div class="container">
                         <?php } ?>
@@ -59,68 +63,55 @@ class Illdy_Widget_Parallax extends WP_Widget
                         <div class="<?php echo esc_attr($class4); ?>">
 
                             <?php
-                            if (($image_pos == 'left' || $image_pos == 'top') && $image_src != '') { ?>
+                            if (($instance['image_pos'] == 'left' || $instance['image_pos'] == 'top') && $instance['image_src'] != '') { ?>
                             <div class="<?php echo esc_attr($class6); ?>">
-                                <img class="cast-shadow img-responsive" alt="<?php echo esc_attr($title); ?>"
-                                     src="<?php echo esc_url($image_src); ?>">
+                                <img class="cast-shadow img-responsive" alt="<?php echo esc_attr($instance['title']); ?>"
+                                     src="<?php echo esc_url( $instance['image_src'] ); ?>">
                                 </div><?php
                             } ?>
 
                             <div class="<?php echo esc_attr($class2); ?>">
                                 <div class="<?php echo esc_attr($class3); ?>"><?php
-                                    echo ($title != '') ? (($image_pos == 'background-full') || ($image_pos == 'background-small')) ? '<h1>' . esc_html($title) . '</h1>' : '<h3>' . esc_html($title) . '</h3>' : '';
-                                    echo ($body_content != '') ? '<p class="mb32">' . esc_html($body_content) . '</p>' : '';
-                                    echo ($button2 != '' && $button2_link != '') ? '<a class="button" href="' . esc_url($button2_link) . '">' . esc_html($button2) . '</a>' : '';
-                                    echo ($button1 != '' && $button1_link != '') ? '<a class="button right-button" href="' . esc_url($button1_link) . '">' . esc_html($button1) . '</a>' : ''; ?>
+                                    echo ( $instance['title'] != '') ? ( ( $instance['image_pos'] == 'background-full' ) || ( $instance['image_pos'] == 'background-small' ) ) ? '<h1>' . esc_html( $instance['title'] ) . '</h1>' : '<h3>' . esc_html( $instance['title'] ) . '</h3>' : '';
+                                    echo ( '' != $instance['body_content'] ) ? '<div class="mb32">' . wp_kses_post( $instance['body_content'] ) . '</div>' : '';
+                                    echo ( $instance['button2'] != '' && $instance['button2_link'] != '') ? '<a class="button" href="' . esc_url( $instance['button2_link'] ) . '">' . esc_html( $instance['button2'] ) . '</a>' : '';
+                                    echo ( $instance['button1'] != '' && $instance['button1_link'] != '') ? '<a class="button right-button" href="' . esc_url( $instance['button1_link'] ) . '">' . esc_html( $instance['button1'] ) . '</a>' : ''; ?>
                                 </div>
                             </div>
                             <!--end of row-->
                             <?php
-                            if (($image_pos == 'right' || $image_pos == 'bottom') && $image_src != '') { ?>
+                            if (($instance['image_pos'] == 'right' || $instance['image_pos'] == 'bottom') && '' != $instance['image_src'] ) { ?>
                             <div class="<?php echo esc_attr($class5); ?>">
-                                <img class="cast-shadow img-responsive" alt="<?php echo esc_attr($title); ?>"
-                                     src="<?php echo esc_url($image_src); ?>">
+                                <img class="cast-shadow img-responsive" alt="<?php echo esc_attr($instance['title']); ?>"
+                                     src="<?php echo esc_url( $instance['image_src'] ); ?>">
                                 </div><?php
                             } ?>
                         </div>
                     </div>
-                    <?php if ($image_pos == 'background-full' || $image_pos == 'background-small') { ?>
+                    <?php if ($instance['image_pos'] == 'background-full' || $instance['image_pos'] == 'background-small') { ?>
                 </div>
                 <?php } ?>
         </section>
         <div class="clearfix"></div>
         <?php
-        echo $after_widget;
+        echo $args['after_widget'];
     }
     function form($instance)
     {
-        if (!isset($instance['title'])) {
-            $instance['title'] = '';
-        }
-        if (!isset($instance['image_src'])) {
-            $instance['image_src'] = '';
-        }
-        if (!isset($instance['image_pos'])) {
-            $instance['image_pos'] = 'left';
-        }
-        if (!isset($instance['body_content'])) {
-            $instance['body_content'] = '';
-        }
-        if (!isset($instance['button1'])) {
-            $instance['button1'] = '';
-        }
-        if (!isset($instance['button2'])) {
-            $instance['button2'] = '';
-        }
-        if (!isset($instance['button1_link'])) {
-            $instance['button1_link'] = '';
-        }
-        if (!isset($instance['button2_link'])) {
-            $instance['button2_link'] = '';
-        }
-        if (!isset($instance['border_bottom'])) {
-            $instance['border_bottom'] = '';
-        }
+
+        $defaults = array(
+            'title' => '',
+            'image_src' => '',
+            'image_pos' => '',
+            'body_content' => '',
+            'button1' => '',
+            'button2' => '',
+            'button1_link' => '',
+            'button2_link' => '',
+            'border_bottom' => '',
+        );
+        $instance = wp_parse_args( $instance, $defaults );
+
         ?>
 
         <p><label
@@ -242,15 +233,15 @@ class Illdy_Widget_Parallax extends WP_Widget
     public function update($new_instance, $old_instance)
     {
         $instance = array();
-        $instance['title'] = (!empty($new_instance['title'])) ? esc_html($new_instance['title']) : '';
+        $instance['title'] = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : '';
         $instance['image_src'] = (!empty($new_instance['image_src'])) ? esc_url_raw($new_instance['image_src']) : '';
-        $instance['image_pos'] = (!empty($new_instance['image_pos'])) ? esc_html($new_instance['image_pos']) : '';
+        $instance['image_pos'] = (!empty($new_instance['image_pos'])) ? sanitize_text_field($new_instance['image_pos']) : '';
         $instance['body_content'] = (!empty($new_instance['body_content'])) ? wp_kses_post($new_instance['body_content']) : '';
         $instance['button1'] = (!empty($new_instance['button1'])) ? wp_kses_post($new_instance['button1']) : '';
         $instance['button2'] = (!empty($new_instance['button2'])) ? wp_kses_post($new_instance['button2']) : '';
         $instance['button1_link'] = (!empty($new_instance['button1_link'])) ? esc_url_raw($new_instance['button1_link']) : '';
         $instance['button2_link'] = (!empty($new_instance['button2_link'])) ? esc_url_raw($new_instance['button2_link']) : '';
-        $instance['border_bottom'] = (!empty($new_instance['border_bottom'])) ? esc_html($new_instance['border_bottom']) : '';
+        $instance['border_bottom'] = (!empty($new_instance['border_bottom'])) ? sanitize_text_field($new_instance['border_bottom']) : '';
         return $instance;
     }
 }

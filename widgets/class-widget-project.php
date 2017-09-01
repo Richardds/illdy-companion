@@ -31,16 +31,19 @@ class Illdy_Widget_Project extends WP_Widget {
 
         $lightbox = get_theme_mod( 'illdy_projects_lightbox', false );
 
-        $title = ( !empty( $instance['title'] ) ? esc_attr( $instance['title'] ) : '' );
-        $image = !empty( $instance['image'] ) ? esc_url( $instance['image'] ) : '';
-        $url = !empty( $instance['url'] ) ? esc_url( $instance['url'] ) : '';
+        $defaults = array(
+            'title' => '',
+            'url' => '',
+            'image' => '',
+        );
+        $instance = wp_parse_args( $instance, $defaults );
 
-        $image_id = illdy_get_image_id_from_image_url( $image );
+        $image_id = illdy_get_image_id_from_image_url( $instance['image'] );
         $get_attachment_image_src = wp_get_attachment_image_src( $image_id, 'illdy-front-page-projects' );
 
         $class = 'project';
 
-        if ( $url == '' ) {
+        if ( '' == $instance['url'] ) {
             $class .= ' no-url';
         }
         $attr = '';
@@ -50,14 +53,16 @@ class Illdy_Widget_Project extends WP_Widget {
                     $url = wp_get_attachment_image_src( $image_id, 'full' );
                     $url = $url[0];
                 }else{
-                    $url = $image;
+                    $url = $instance['image'];
                 }
             
             $class .= ' fancybox';
             $attr = ' rel="projects-gallery"';
+        }else{
+            $url = $instance['url'];
         }
 
-        $output = '<a href="'. $url .'" title="'. $title .'" class="'.$class.'"'.$attr.' style="background-image: url('. ( $image_id ? esc_url( $get_attachment_image_src[0] ) : $image ) .');"><span class="project-overlay"></span></a>';
+        $output = '<a href="'. esc_url( $url ) .'" title="'. esc_attr( $instance['title'] ) .'" class="'.$class.'"'.$attr.' style="background-image: url('. ( $image_id ? esc_url( $get_attachment_image_src[0] ) : esc_url( $instance['image'] ) ) .');"><span class="project-overlay"></span></a>';
 
         echo $output;
 
@@ -72,24 +77,29 @@ class Illdy_Widget_Project extends WP_Widget {
      * @param array $instance Previously saved values from database.
      */
     public function form( $instance ) {
-        $title = !empty( $instance['title'] ) ? sanitize_text_field( $instance['title'] ) : __( '[Illdy] - Project', 'illdy' );
-        $image = !empty( $instance['image'] ) ? esc_url( $instance['image'] ) : '';
-        $url = !empty( $instance['url'] ) ? sanitize_text_field( $instance['url'] ) : '';
+
+        $defaults = array(
+            'title' => __( '[Illdy] - Project', 'illdy' ),
+            'url' => '',
+            'image' => get_template_directory_uri() . '/layout/images/front-page/front-page-project-1.jpg',
+        );
+        $instance = wp_parse_args( $instance, $defaults );
+
         ?>
         <p>
             <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'illdy' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $instance['title'] ); ?>">
         </p>
 
         <p>
             <label for="<?php echo $this->get_field_name( 'image' ); ?>"><?php _e( 'Image:', 'illdy' ); ?></label>
-            <input type="text" class="widefat custom_media_url_<?php echo $this->get_field_id( 'image' ); ?>" name="<?php echo $this->get_field_name( 'image' ); ?>" id="<?php echo $this->get_field_id( 'image' ); ?>" value="<?php if( !empty( $instance['image'] ) ): echo $instance['image']; else: get_template_directory_uri() . '/layout/images/front-page/front-page-project-1.jpg'; endif; ?>" style="margin-top:5px;">
+            <input type="text" class="widefat custom_media_url_<?php echo $this->get_field_id( 'image' ); ?>" name="<?php echo $this->get_field_name( 'image' ); ?>" id="<?php echo $this->get_field_id( 'image' ); ?>" value="<?php echo $instance['image']; ?>" style="margin-top:5px;">
             <input type="button" class="button button-primary custom_media_button" id="custom_media_button_service" data-fieldid="<?php echo $this->get_field_id( 'image' ); ?>" name="<?php echo $this->get_field_name( 'image' ); ?>" value="<?php _e( 'Upload Image','illdy' ); ?>" style="margin-top: 5px;">
         </p>
 
         <p>
             <label for="<?php echo $this->get_field_id( 'url' ); ?>"><?php _e( 'URL:', 'illdy' ); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id( 'url' ); ?>" name="<?php echo $this->get_field_name( 'url' ); ?>" type="text" value="<?php echo esc_attr( $url ); ?>">
+            <input class="widefat" id="<?php echo $this->get_field_id( 'url' ); ?>" name="<?php echo $this->get_field_name( 'url' ); ?>" type="text" value="<?php echo esc_attr( $instance['url'] ); ?>">
         </p>
         <?php 
     }
@@ -106,9 +116,9 @@ class Illdy_Widget_Project extends WP_Widget {
      */
     public function update( $new_instance, $old_instance ) {
         $instance = array();
-        $instance['title'] = ( !empty( $new_instance['title'] ) ) ? esc_html( $new_instance['title'] ) : '';
-        $instance['image'] = !empty( $new_instance['image'] ) ? esc_url( $new_instance['image'] ) : '';
-        $instance['url'] = ( !empty( $new_instance['url'] ) ? esc_url( $new_instance['url'] ) : '' );
+        $instance['title'] = ( !empty( $new_instance['title'] ) ) ? sanitize_text_field( $new_instance['title'] ) : '';
+        $instance['image'] = !empty( $new_instance['image'] ) ? esc_url_raw( $new_instance['image'] ) : '';
+        $instance['url'] = ( !empty( $new_instance['url'] ) ? esc_url_raw( $new_instance['url'] ) : '' );
 
         return $instance;
     }

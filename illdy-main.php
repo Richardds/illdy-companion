@@ -1,5 +1,8 @@
 <?php
 
+// Include Illdy Companion Helper
+require_once plugin_dir_path( __FILE__ ) . 'class-illdy-companion-helper.php';
+
 add_filter( 'illdy_required_actions', 'illdy_companion_add_import_action' );
 
 function illdy_companion_check_content_import() {
@@ -23,20 +26,20 @@ function illdy_companion_add_import_action( $actions ) {
 	$html .= '</div>';
 
 	$actions[] = array(
-					"id"          => 'illdy-req-ac-static',
-					"title"       => esc_html__( 'Set front page to static', 'illdy-companion' ),
-					"description" => esc_html__( 'If you just installed Illdy, and are not able to see the front-page demo, you need to go to Settings -> Reading , Front page displays and select "Static Page".', 'illdy-companion' ),
-					"help"        => 'If you need more help understanding how this works, check out the following <a target="_blank"  href="https://codex.wordpress.org/Creating_a_Static_Front_Page#WordPress_Static_Front_Page_Process">link</a>. <br/><br/> <a class="button button-secondary" target="_blank"  href="' . self_admin_url( 'options-reading.php' ) . '">' . __( 'Set manually', 'illdy-companion' ) . '</a> <a id="set-static-page" class="button button-primary"  href="#">' . __( 'Set automatically', 'illdy' ) . '</a><span class="spinner frontpage-spinner"></span><div class="updated-message"><p>'.__( 'Static Front Page setted', 'illdy-companion' ).'</p></div>',
-					"check"       => MT_Notify_System::is_not_static_page()
-				);
+		"id"          => 'illdy-req-ac-static',
+		"title"       => esc_html__( 'Set front page to static', 'illdy-companion' ),
+		"description" => esc_html__( 'If you just installed Illdy, and are not able to see the front-page demo, you need to go to Settings -> Reading , Front page displays and select "Static Page".', 'illdy-companion' ),
+		"help"        => 'If you need more help understanding how this works, check out the following <a target="_blank"  href="https://codex.wordpress.org/Creating_a_Static_Front_Page#WordPress_Static_Front_Page_Process">link</a>. <br/><br/> <a class="button button-secondary" target="_blank"  href="' . self_admin_url( 'options-reading.php' ) . '">' . __( 'Set manually', 'illdy-companion' ) . '</a> <a id="set-static-page" class="button button-primary"  href="#">' . __( 'Set automatically', 'illdy' ) . '</a><span class="spinner frontpage-spinner"></span><div class="updated-message"><p>'.__( 'Static Front Page setted', 'illdy-companion' ).'</p></div>',
+		"check"       => MT_Notify_System::is_not_static_page()
+	);
 
 	$actions[] = array(
-					"id"          => 'illdy-req-ac-import-demo-content',
-					"title"       => esc_html__( 'Import Demo Content', 'illdy-companion' ),
-					"description" => esc_html__( 'You have 3 different options. The quickest way to set-up this theme is if you click the big blue button and "make your website look like our demo". If you know what you\'re doing, you can manually import the demo settings for the customizer as well as for the widgets.', 'illdy-companion' ),
-					"help"        => $html,
-					"check"       => illdy_companion_check_content_import()
-				);
+		"id"          => 'illdy-req-ac-import-demo-content',
+		"title"       => esc_html__( 'Import Demo Content', 'illdy-companion' ),
+		"description" => esc_html__( 'You have 3 different options. The quickest way to set-up this theme is if you click the big blue button and "make your website look like our demo". If you know what you\'re doing, you can manually import the demo settings for the customizer as well as for the widgets.', 'illdy-companion' ),
+		"help"        => $html,
+		"check"       => illdy_companion_check_content_import()
+	);
 
 	
 
