@@ -12,7 +12,7 @@ class Illdy_Widget_Recent_Posts extends WP_Widget {
 
 
     public function enqueue_scripts(){
-        wp_enqueue_style( 'epsilon-styles', get_template_directory_uri() . '/inc/customizer/assets/css/illdy-customizer.css' );
+        wp_enqueue_style( 'illdy-companion-widget-styles', get_template_directory_uri() . '/inc/customizer/assets/css/illdy-customizer.css' );
     }
 
     /**

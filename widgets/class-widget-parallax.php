@@ -14,10 +14,9 @@ class Illdy_Widget_Parallax extends WP_Widget
         );
         parent::__construct('illdy_home_parallax', esc_html__('[Illdy] Parralax Section For FrontPage', 'illdy'), $widget_ops);
     }
-    public function enqueue()
-    {
-        wp_enqueue_style('epsilon-styles', plugins_url('/css/epsilon.css', dirname(__FILE__)));
-        wp_enqueue_script('epsilon-object', plugins_url('/js/epsilon.js', dirname(__FILE__)), array('jquery'));
+    public function enqueue() {
+        wp_enqueue_style('illdy-companion-epsilon-styles', plugins_url('/css/epsilon.css', dirname(__FILE__)));
+        wp_enqueue_script('illdy-companion-epsilon-object', plugins_url('/js/epsilon.js', dirname(__FILE__)), array('jquery'));
     }
     function widget($args, $instance)
     {   
