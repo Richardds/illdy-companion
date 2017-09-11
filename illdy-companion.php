@@ -17,6 +17,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 define( 'ILLDY_COMPANION', '1.0.8' );
+define( 'ILLDY_COMPANION_ASSETS_DIR', plugins_url( '/assets/', __FILE__ ) );
 
 /**
  * Load the Dashboard Widget
@@ -48,11 +49,11 @@ if ( 'Illdy' == $current_theme->get( 'Name' ) || ( $current_parent && 'Illdy' ==
 } else {
 
 	add_action( 'admin_notices', 'illdy_companion_admin_notice', 99 );
-	function illdy_companion_admin_notice() { ?>
+	function illdy_companion_admin_notice() {
+	?>
 		<div class="notice-warning notice">
-			<p><?php printf( __( 'In order to use the <strong>Illdy Companion</strong> plugin you have to also install the %sIlldy Theme%s', 'shapely' ), '<a href="https://wordpress.org/themes/illdy/" target="_blank">', '</a>' ) ?></p>
+			<p><?php printf( __( 'In order to use the <strong>Illdy Companion</strong> plugin you have to also install the %1$sIlldy Theme%2$s', 'shapely' ), '<a href="https://wordpress.org/themes/illdy/" target="_blank">', '</a>' ) ?></p>
 		</div>
 		<?php
 	}
-
 }

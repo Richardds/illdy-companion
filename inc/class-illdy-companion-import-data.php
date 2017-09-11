@@ -1,7 +1,7 @@
 <?php
 
 class Illdy_Companion_Import_Data {
-	
+
 	function __construct() {
 
 		/**
@@ -20,7 +20,7 @@ class Illdy_Companion_Import_Data {
 		if ( is_customize_preview() ) {
 			$url                = 'themes.php?page=%1$s-welcome&tab=%2$s';
 			$html = '<a class="button button-primary" id="" href="' . esc_url( admin_url( sprintf( $url, 'illdy', 'recommended-actions' ) ) ) . '">' . __( 'Import Demo Content', 'medzone' ) . '</a>';
-		}else{
+		} else {
 			$html = '<p><a class="button button-primary epsilon-ajax-button" id="add_default_sections" href="#">' . __( 'Import Demo Content', 'epsilon-framework' ) . '</a>';
 			$html .= '<a class="button epsilon-hidden-content-toggler" href="#welcome-hidden-content">' . __( 'Advanced', 'epsilon-framework' ) . '</a></p>';
 			$html .= '<div class="import-content-container" id="welcome-hidden-content">';
@@ -35,11 +35,11 @@ class Illdy_Companion_Import_Data {
 		}
 
 		$actions[] = array(
-			"id"          => 'illdy-req-ac-import-demo-content',
-			"title"       => esc_html__( 'Import Demo Content', 'illdy-companion' ),
-			"description" => esc_html__( 'Clicking the button below will add content, widgets and set static front page to your WordPress installation. Click advanced to customize the import process.', 'illdy-companion' ),
-			"help"        => $html,
-			"check"       => $this->check_content_import()
+			'id'          => 'illdy-req-ac-import-demo-content',
+			'title'       => esc_html__( 'Import Demo Content', 'illdy-companion' ),
+			'description' => esc_html__( 'Clicking the button below will add content, widgets and set static front page to your WordPress installation. Click advanced to customize the import process.', 'illdy-companion' ),
+			'help'        => $html,
+			'check'       => $this->check_content_import(),
 		);
 
 		return $actions;
@@ -84,10 +84,10 @@ class Illdy_Companion_Import_Data {
 			$illdy_show_required_actions['illdy-req-import-content'] = true;
 			update_option( 'illdy_show_required_actions', $illdy_show_required_actions );
 			return 'ok';
-		}else{
+		} else {
 			return 'nok';
 		}
-		
+
 	}
 
 	public static function set_static_frontpage() {
@@ -190,7 +190,7 @@ class Illdy_Companion_Import_Data {
 		foreach ( $illdy_customizer_defaults as $customizer_key => $customizer_value ) {
 			if ( ! $force ) {
 				$current_value = get_theme_mod( $prefix . $customizer_key );
-				if ( $current_value == '' ) {
+				if ( '' == $current_value ) {
 					set_theme_mod( $prefix . $customizer_key, $customizer_value );
 				}
 			} else {
