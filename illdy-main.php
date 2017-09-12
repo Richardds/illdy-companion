@@ -29,7 +29,7 @@ if ( ! function_exists( 'illdy_companion_admin_scripts' ) ) {
 		wp_enqueue_style( 'font-awesome', plugins_url( '/assets/css/font-awesome.min.css', __FILE__ ), array(), '4.5.0', 'all' );
 		wp_enqueue_style( 'illdy-companion-iconpicker-css', plugins_url( '/assets/css/jquery.fonticonpicker.css', __FILE__ ) );
 		wp_enqueue_style( 'illdy-companion-iconpicker-theme-css', plugins_url( '/assets/css/jquery.fonticonpicker.grey.min.css', __FILE__ ) );
-		wp_enqueue_script( 'illdy-companion-iconpicker-js', plugins_url( '/assets/js/jquery.fonticonpicker.min.js', __FILE__ ), array( 'jquery' ) );
+		wp_enqueue_script( 'illdy-companion-iconpicker-js', plugins_url( '/assets/js/iconpicker.min.js', __FILE__ ), array( 'jquery' ) );
 		wp_enqueue_script( 'illdy-companion-admin-js', plugins_url( '/assets/js/admin.js', __FILE__ ), array( 'jquery' ) );
 
 		wp_localize_script( 'illdy-companion-admin-js', 'illdyCompanion', array(
