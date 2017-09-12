@@ -1,4 +1,4 @@
-
+// jscs:ignore validateLineBreaks
 var illdyCompanionImporter = {
 
       /**
@@ -27,7 +27,7 @@ var illdyCompanionImporter = {
 
             e.preventDefault();
 
-            jQuery(this).addClass( 'updating-message' );
+            jQuery( this ).addClass( 'updating-message' );
 
             jQuery.each( checkboxes, function( k, item ) {
 
@@ -58,13 +58,12 @@ var illdyCompanionImporter = {
 
                 } );
 
-
           } );
-      },
+      }
 
 };
 
-jQuery(document).ready(function(){
+jQuery( document ).ready(function() {
 
       illdyCompanionImporter.showHiddenContent();
       illdyCompanionImporter.importDemoContent();

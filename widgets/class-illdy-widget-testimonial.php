@@ -6,8 +6,8 @@ class Illdy_Widget_Testimonial extends WP_Widget {
 	 * Register widget with WordPress.
 	 */
 	function __construct() {
-		parent::__construct( 'illdy_testimonial', __( '[Illdy] - Testimonial', 'illdy' ), array(
-			'description' => __( 'Add this widget in "Front page - Testimonial Sidebar".', 'illdy' ),
+		parent::__construct( 'illdy_testimonial', __( '[Illdy] - Testimonial', 'illdy-companion' ), array(
+			'description' => __( 'Add this widget in "Front page - Testimonial Sidebar".', 'illdy-companion' ),
 		) );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -81,18 +81,18 @@ class Illdy_Widget_Testimonial extends WP_Widget {
 
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'name' ); ?>"><?php _e( 'Name:', 'illdy' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'name' ); ?>"><?php _e( 'Name:', 'illdy-companion' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'name' ); ?>" name="<?php echo $this->get_field_name( 'name' ); ?>" type="text" value="<?php echo esc_attr( $instance['name'] ); ?>">
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_name( 'image' ); ?>"><?php _e( 'Image:', 'illdy' ); ?></label>
+			<label for="<?php echo $this->get_field_name( 'image' ); ?>"><?php _e( 'Image:', 'illdy-companion' ); ?></label>
 			<input type="text" class="widefat custom_media_url_<?php echo $this->get_field_id( 'image' ); ?>" name="<?php echo $this->get_field_name( 'image' ); ?>" id="<?php echo $this->get_field_id( 'image' ); ?>" value="<?php echo esc_attr( $instance['image'] ) ?>" style="margin-top:5px;">
-			<input type="button" class="button button-primary custom_media_button" id="custom_media_button_service" data-fieldid="<?php echo $this->get_field_id( 'image' ); ?>" name="<?php echo $this->get_field_name( 'image' ); ?>" value="<?php _e( 'Upload Image','illdy' ); ?>" style="margin-top: 5px;">
+			<input type="button" class="button button-primary custom_media_button" id="custom_media_button_service" data-fieldid="<?php echo $this->get_field_id( 'image' ); ?>" name="<?php echo $this->get_field_name( 'image' ); ?>" value="<?php _e( 'Upload Image', 'illdy-companion' ); ?>" style="margin-top: 5px;">
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'testimonial' ); ?>"><?php _e( 'Testimonial:', 'illdy' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'testimonial' ); ?>"><?php _e( 'Testimonial:', 'illdy-companion' ); ?></label>
 			<textarea class="widefat" id="<?php echo $this->get_field_id( 'testimonial' ); ?>" name="<?php echo $this->get_field_name( 'testimonial' ); ?>">
 					<?php echo wp_kses_post( $instance['testimonial'] ); ?>
 			</textarea>

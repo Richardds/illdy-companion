@@ -6,8 +6,8 @@ class Illdy_Widget_Counter extends WP_Widget {
 	 * Register widget with WordPress.
 	 */
 	function __construct() {
-		parent::__construct( 'illdy_counter', __( '[Illdy] - Counter', 'illdy' ), array(
-			'description' => __( 'Add this widget in "Front page - Counter Sidebar".', 'illdy' ),
+		parent::__construct( 'illdy_counter', __( '[Illdy] - Counter', 'illdy-companion' ), array(
+			'description' => __( 'Add this widget in "Front page - Counter Sidebar".', 'illdy-companion' ),
 		) );
 	}
 
@@ -49,7 +49,7 @@ class Illdy_Widget_Counter extends WP_Widget {
 	public function form( $instance ) {
 
 		$defaults = array(
-			'title' => __( 'Projects', 'illdy' ),
+			'title' => __( 'Projects', 'illdy-companion' ),
 			'data_from' => 1,
 			'data_to' => 260,
 			'data_speed' => 2000,
@@ -59,31 +59,31 @@ class Illdy_Widget_Counter extends WP_Widget {
 
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'illdy' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'illdy-companion' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $instance['title'] ); ?>">
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'data_from' ); ?>"><?php _e( 'Data from:', 'illdy' ); ?></label>
-			<span class="widefat" style="font-style: italic; display: block;"><?php _e( 'Counter should start at', 'illdy' ); ?></span>
+			<label for="<?php echo $this->get_field_id( 'data_from' ); ?>"><?php _e( 'Data from:', 'illdy-companion' ); ?></label>
+			<span class="widefat" style="font-style: italic; display: block;"><?php _e( 'Counter should start at', 'illdy-companion' ); ?></span>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'data_from' ); ?>" name="<?php echo $this->get_field_name( 'data_from' ); ?>" type="number" value="<?php echo esc_attr( $instance['data_from'] ); ?>">
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'data_to' ); ?>"><?php _e( 'Data to:', 'illdy' ); ?></label>
-			<span class="widefat" style="font-style: italic; display: block;"><?php _e( 'Counter should end at', 'illdy' ); ?></span>
+			<label for="<?php echo $this->get_field_id( 'data_to' ); ?>"><?php _e( 'Data to:', 'illdy-companion' ); ?></label>
+			<span class="widefat" style="font-style: italic; display: block;"><?php _e( 'Counter should end at', 'illdy-companion' ); ?></span>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'data_to' ); ?>" name="<?php echo $this->get_field_name( 'data_to' ); ?>" type="number" value="<?php echo esc_attr( $instance['data_to'] ); ?>">
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'data_speed' ); ?>"><?php _e( 'Data speed:', 'illdy' ); ?></label>
-			<span class="widefat" style="font-style: italic; display: block;"><?php _e( 'How long it should take to count between the target numbers.', 'illdy' ); ?></span>
+			<label for="<?php echo $this->get_field_id( 'data_speed' ); ?>"><?php _e( 'Data speed:', 'illdy-companion' ); ?></label>
+			<span class="widefat" style="font-style: italic; display: block;"><?php _e( 'How long it should take to count between the target numbers.', 'illdy-companion' ); ?></span>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'data_speed' ); ?>" name="<?php echo $this->get_field_name( 'data_speed' ); ?>" type="number" value="<?php echo esc_attr( $instance['data_speed'] ); ?>">
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'data_refresh_interval' ); ?>"><?php _e( 'Data refresh interval:', 'illdy' ); ?></label>
-			<span class="widefat" style="font-style: italic; display: block;"><?php _e( 'How often the element should be updated.', 'illdy' ); ?></span>
+			<label for="<?php echo $this->get_field_id( 'data_refresh_interval' ); ?>"><?php _e( 'Data refresh interval:', 'illdy-companion' ); ?></label>
+			<span class="widefat" style="font-style: italic; display: block;"><?php _e( 'How often the element should be updated.', 'illdy-companion' ); ?></span>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'data_refresh_interval' ); ?>" name="<?php echo $this->get_field_name( 'data_refresh_interval' ); ?>" type="number" value="<?php echo esc_attr( $instance['data_refresh_interval'] ); ?>">
 		</p>
 		<?php

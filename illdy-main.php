@@ -178,12 +178,12 @@ if ( ! function_exists( 'illdy_companion_customize_register' ) ) {
 		if ( ! $wp_customize->get_setting( $prefix . '_contact_us_entry' ) ) {
 			$wp_customize->add_setting( $prefix . '_contact_us_entry', array(
 				'sanitize_callback' => 'wp_kses_post',
-				'default'           => __( 'And we will get in touch as soon as possible.', 'illdy' ),
+				'default'           => __( 'And we will get in touch as soon as possible.', 'illdy-companion' ),
 				'transport'         => 'postMessage',
 			) );
 			$wp_customize->add_control( new Epsilon_Control_Text_Editor( $wp_customize, $prefix . '_contact_us_entry', array(
-				'label'         => __( 'Entry', 'illdy' ),
-				'description'   => __( 'Add the content for this section.', 'illdy' ),
+				'label'         => __( 'Entry', 'illdy-companion' ),
+				'description'   => __( 'Add the content for this section.', 'illdy-companion' ),
 				'section'       => $prefix . '_contact_us',
 				'priority'      => 3,
 				'type'          => 'epsilon-text-editor',

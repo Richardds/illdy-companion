@@ -78,7 +78,7 @@ if ( ! class_exists( 'Epsilon_Dashboard' ) ) {
 		 */
 		public function setup_vars( $args ) {
 			if ( ! isset( $args['widget_title'] ) ) {
-				$args['widget_title'] = apply_filters( 'epsilon_dashboard_widget_name', esc_html__( 'WordPress Guides/Tutorials', 'shapely-companion' ) );
+				$args['widget_title'] = apply_filters( 'epsilon_dashboard_widget_name', esc_html__( 'WordPress Guides/Tutorials', 'illdy-companion' ) );
 			}
 			$this->dashboard_name = $args['widget_title'];
 			$this->feeds          = (array) $args['feed_url'];

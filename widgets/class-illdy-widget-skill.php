@@ -6,8 +6,8 @@ class Illdy_Widget_Skill extends WP_Widget {
 	* Register widget with WordPress.
 	*/
 	function __construct() {
-		parent::__construct( 'illdy_skill', __( '[Illdy] - Skill', 'illdy' ), array(
-			'description' => __( 'Add this widget in "Front page - About Sidebar".', 'illdy' ),
+		parent::__construct( 'illdy_skill', __( '[Illdy] - Skill', 'illdy-companion' ), array(
+			'description' => __( 'Add this widget in "Front page - About Sidebar".', 'illdy-companion' ),
 		) );
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -129,19 +129,19 @@ class Illdy_Widget_Skill extends WP_Widget {
 		?>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'illdy' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'illdy-companion' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $instance['title'] ); ?>">
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'percentage' ); ?>"><?php _e( 'Percentage:', 'illdy' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'percentage' ); ?>"><?php _e( 'Percentage:', 'illdy-companion' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'percentage' ); ?>" name="<?php echo $this->get_field_name( 'percentage' ); ?>" type="number" value="<?php echo esc_attr( $instance['percentage'] ); ?>">
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'icon' ); ?>"><?php _e( 'Icon:', 'illdy' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'icon' ); ?>"><?php _e( 'Icon:', 'illdy-companion' ); ?></label>
 			<select class="widefat fontawesome-picker" id="<?php echo $this->get_field_id( 'icon' ); ?>" name="<?php echo $this->get_field_name( 'icon' ); ?>">
-				<option value="all-font-awesome-icons"><?php _e( 'All Font Awesome Icons', 'illdy' ); ?></option>
+				<option value="all-font-awesome-icons"><?php _e( 'All Font Awesome Icons', 'illdy-companion' ); ?></option>
 				<?php foreach ( $get_fontawesome_icons as $key => $get_fontawesome_icon ) : ?>
 					<option value="fa <?php echo esc_attr( $key ); ?>" <?php selected( $instance['icon'], 'fa ' . $key ); ?>>fa <?php echo esc_html( $get_fontawesome_icon ); ?></option>
 				<?php endforeach; ?>
@@ -149,7 +149,7 @@ class Illdy_Widget_Skill extends WP_Widget {
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'color' ); ?>"><?php _e( 'Color:', 'illdy' ); ?></label><br>
+			<label for="<?php echo $this->get_field_id( 'color' ); ?>"><?php _e( 'Color:', 'illdy-companion' ); ?></label><br>
 			<input type="text" name="<?php echo $this->get_field_name( 'color' ); ?>" class="color-picker" id="<?php echo $this->get_field_id( 'color' ); ?>" value="<?php echo esc_attr( $instance['color'] ); ?>" data-default-color="#000000" />
 		</p>
 	<?php

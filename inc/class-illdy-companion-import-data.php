@@ -13,16 +13,16 @@ class Illdy_Companion_Import_Data {
 
 	public function generate_import_data_container( $actions ) {
 		$import_actions = array(
-			'set_static_frontpage' => esc_html__( 'Set front page to static page', 'illdy' ),
-			'import_customizer' => esc_html__( 'Import Customizer Setting', 'illdy' ),
-			'import_widgets' => esc_html__( 'Import Widgets', 'illdy' ),
+			'set_static_frontpage' => esc_html__( 'Set front page to static page', 'illdy-companion' ),
+			'import_customizer' => esc_html__( 'Import Customizer Setting', 'illdy-companion' ),
+			'import_widgets' => esc_html__( 'Import Widgets', 'illdy-companion' ),
 		);
 		if ( is_customize_preview() ) {
 			$url                = 'themes.php?page=%1$s-welcome&tab=%2$s';
-			$html = '<a class="button button-primary" id="" href="' . esc_url( admin_url( sprintf( $url, 'illdy', 'recommended-actions' ) ) ) . '">' . __( 'Import Demo Content', 'medzone' ) . '</a>';
+			$html = '<a class="button button-primary" id="" href="' . esc_url( admin_url( sprintf( $url, 'illdy', 'recommended-actions' ) ) ) . '">' . __( 'Import Demo Content', 'illdy-companion' ) . '</a>';
 		} else {
-			$html = '<p><a class="button button-primary epsilon-ajax-button" id="add_default_sections" href="#">' . __( 'Import Demo Content', 'epsilon-framework' ) . '</a>';
-			$html .= '<a class="button epsilon-hidden-content-toggler" href="#welcome-hidden-content">' . __( 'Advanced', 'epsilon-framework' ) . '</a></p>';
+			$html = '<p><a class="button button-primary epsilon-ajax-button" id="add_default_sections" href="#">' . __( 'Import Demo Content', 'illdy-companion' ) . '</a>';
+			$html .= '<a class="button epsilon-hidden-content-toggler" href="#welcome-hidden-content">' . __( 'Advanced', 'illdy-companion' ) . '</a></p>';
 			$html .= '<div class="import-content-container" id="welcome-hidden-content">';
 			$html .= '<div class="demo-content-container">';
 			$html .= '<div class="checkbox-group">';

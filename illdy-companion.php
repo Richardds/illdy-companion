@@ -31,7 +31,7 @@ require_once plugin_dir_path( __FILE__ ) . 'inc/epsilon-dashboard/class-epsilon-
  */
 function shapely_companion_dashboard_widget() {
 	$epsilon_dashboard_args = array(
-		'widget_title' => esc_html__( 'From our blog', 'illdy' ),
+		'widget_title' => esc_html__( 'From our blog', 'illdy-companion' ),
 		'feed_url'  => array( 'https://colorlib.com/wp/feed/' ),
 	);
 	return Epsilon_Dashboard::instance( $epsilon_dashboard_args );
@@ -52,7 +52,7 @@ if ( 'Illdy' == $current_theme->get( 'Name' ) || ( $current_parent && 'Illdy' ==
 	function illdy_companion_admin_notice() {
 	?>
 		<div class="notice-warning notice">
-			<p><?php printf( __( 'In order to use the <strong>Illdy Companion</strong> plugin you have to also install the %1$sIlldy Theme%2$s', 'shapely' ), '<a href="https://wordpress.org/themes/illdy/" target="_blank">', '</a>' ) ?></p>
+			<p><?php printf( __( 'In order to use the <strong>Illdy Companion</strong> plugin you have to also install the %1$sIlldy Theme%2$s', 'illdy-companion' ), '<a href="https://wordpress.org/themes/illdy/" target="_blank">', '</a>' ) ?></p>
 		</div>
 		<?php
 	}

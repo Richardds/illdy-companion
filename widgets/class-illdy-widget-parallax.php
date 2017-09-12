@@ -8,10 +8,10 @@ class Illdy_Widget_Parallax extends WP_Widget {
 		add_action( 'customize_preview_init', array( $this, 'enqueue' ) );
 		$widget_ops = array(
 			'classname' => 'illdy_home_parallax',
-			'description' => esc_html__( 'Illdy FrontPage Parallax Section', 'illdy' ),
+			'description' => esc_html__( 'Illdy FrontPage Parallax Section', 'illdy-companion' ),
 			'customize_selective_refresh' => true,
 		);
-		parent::__construct( 'illdy_home_parallax', esc_html__( '[Illdy] Parralax Section For FrontPage', 'illdy' ), $widget_ops );
+		parent::__construct( 'illdy_home_parallax', esc_html__( '[Illdy] Parralax Section For FrontPage', 'illdy-companion' ), $widget_ops );
 	}
 	public function enqueue() {
 		wp_enqueue_style( 'illdy-companion-epsilon-styles', ILLDY_COMPANION_ASSETS_DIR . '/css/epsilon.css' );
@@ -111,7 +111,7 @@ class Illdy_Widget_Parallax extends WP_Widget {
 		?>
 
 		<p><label
-				for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title ', 'illdy' ) ?></label>
+				for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title ', 'illdy-companion' ) ?></label>
 
 			<input type="text" value="<?php echo esc_attr( $instance['title'] ); ?>"
 				   name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>"
@@ -122,7 +122,7 @@ class Illdy_Widget_Parallax extends WP_Widget {
 		<p class="illdy-media-control"
 		   data-delegate-container="<?php echo esc_attr( $this->get_field_id( 'image_src' ) ) ?>">
 			<label
-				for="<?php echo esc_attr( $this->get_field_id( 'image_src' ) ); ?>"><?php _e( 'Image', 'illdy' );
+				for="<?php echo esc_attr( $this->get_field_id( 'image_src' ) ); ?>"><?php _e( 'Image', 'illdy-companion' );
 				?>:</label>
 
 			<img src="<?php echo esc_url( $instance['image_src'] ); ?>"/>
@@ -133,12 +133,12 @@ class Illdy_Widget_Parallax extends WP_Widget {
 				   value="<?php echo esc_url( $instance['image_src'] ); ?>"
 				   class="image-id blazersix-media-control-target">
 
-			<button type="button" class="button upload-button"><?php _e( 'Choose Image', 'illdy' ); ?></button>
-			<button type="button" class="button remove-button"><?php _e( 'Remove Image', 'illdy' ); ?></button>
+			<button type="button" class="button upload-button"><?php _e( 'Choose Image', 'illdy-companion' ); ?></button>
+			<button type="button" class="button remove-button"><?php _e( 'Remove Image', 'illdy-companion' ); ?></button>
 		</p>
 
 		<p><label
-				for="<?php echo esc_attr( $this->get_field_id( 'body_content' ) ); ?>"><?php esc_html_e( 'Content ', 'illdy' ) ?></label>
+				for="<?php echo esc_attr( $this->get_field_id( 'body_content' ) ); ?>"><?php esc_html_e( 'Content ', 'illdy-companion' ) ?></label>
 
 			<textarea name="<?php echo esc_attr( $this->get_field_name( 'body_content' ) ); ?>"
 					  id="<?php echo esc_attr( $this->get_field_id( 'body_content' ) ); ?>"
@@ -146,26 +146,26 @@ class Illdy_Widget_Parallax extends WP_Widget {
 		</p>
 
 		<p><label
-				for="<?php echo esc_attr( $this->get_field_id( 'image_pos' ) ); ?>"><?php esc_html_e( 'Image Position ', 'illdy' ) ?></label>
+				for="<?php echo esc_attr( $this->get_field_id( 'image_pos' ) ); ?>"><?php esc_html_e( 'Image Position ', 'illdy-companion' ) ?></label>
 			<select name="<?php echo esc_attr( $this->get_field_name( 'image_pos' ) ); ?>"
 					id="<?php echo esc_attr( $this->get_field_id( 'image_pos' ) ); ?>" class="widefat">
 				<option
-					value="left" <?php selected( $instance['image_pos'], 'left' ); ?>><?php _e( 'Left', 'illdy' ); ?></option>
+					value="left" <?php selected( $instance['image_pos'], 'left' ); ?>><?php _e( 'Left', 'illdy-companion' ); ?></option>
 				<option
-					value="right" <?php selected( $instance['image_pos'], 'right' ); ?>><?php _e( 'Right', 'illdy' ); ?></option>
+					value="right" <?php selected( $instance['image_pos'], 'right' ); ?>><?php _e( 'Right', 'illdy-companion' ); ?></option>
 				<option
-					value="top" <?php selected( $instance['image_pos'], 'top' ); ?>><?php _e( 'Top', 'illdy' ); ?></option>
+					value="top" <?php selected( $instance['image_pos'], 'top' ); ?>><?php _e( 'Top', 'illdy-companion' ); ?></option>
 				<option
-					value="bottom" <?php selected( $instance['image_pos'], 'bottom' ); ?>><?php _e( 'Bottom', 'illdy' ); ?></option>
+					value="bottom" <?php selected( $instance['image_pos'], 'bottom' ); ?>><?php _e( 'Bottom', 'illdy-companion' ); ?></option>
 				<option
-					value="background-full" <?php selected( $instance['image_pos'], 'background-full' ); ?>><?php _e( 'Background Full', 'illdy' ); ?></option>
+					value="background-full" <?php selected( $instance['image_pos'], 'background-full' ); ?>><?php _e( 'Background Full', 'illdy-companion' ); ?></option>
 				<option
-					value="background-small" <?php selected( $instance['image_pos'], 'background-small' ); ?>><?php _e( 'Background Small', 'illdy' ); ?></option>
+					value="background-small" <?php selected( $instance['image_pos'], 'background-small' ); ?>><?php _e( 'Background Small', 'illdy-companion' ); ?></option>
 			</select>
 		</p>
 
 		<p><label
-				for="<?php echo esc_attr( $this->get_field_id( 'button1' ) ); ?>"><?php esc_html_e( 'Button 1 Text ', 'illdy' ) ?></label>
+				for="<?php echo esc_attr( $this->get_field_id( 'button1' ) ); ?>"><?php esc_html_e( 'Button 1 Text ', 'illdy-companion' ) ?></label>
 
 			<input type="text" value="<?php echo esc_attr( $instance['button1'] ); ?>"
 				   name="<?php echo esc_attr( $this->get_field_name( 'button1' ) ); ?>"
@@ -174,7 +174,7 @@ class Illdy_Widget_Parallax extends WP_Widget {
 		</p>
 
 		<p><label
-				for="<?php echo esc_attr( $this->get_field_id( 'button1_link' ) ); ?>"><?php esc_html_e( 'Button 1 Link ', 'illdy' ) ?></label>
+				for="<?php echo esc_attr( $this->get_field_id( 'button1_link' ) ); ?>"><?php esc_html_e( 'Button 1 Link ', 'illdy-companion' ) ?></label>
 
 			<input type="text" value="<?php echo esc_url( $instance['button1_link'] ); ?>"
 				   name="<?php echo esc_attr( $this->get_field_name( 'button1_link' ) ); ?>"
@@ -183,7 +183,7 @@ class Illdy_Widget_Parallax extends WP_Widget {
 		</p>
 
 		<p><label
-				for="<?php echo esc_attr( $this->get_field_id( 'button2' ) ); ?>"><?php esc_html_e( 'Button 2 Text ', 'illdy' ) ?></label>
+				for="<?php echo esc_attr( $this->get_field_id( 'button2' ) ); ?>"><?php esc_html_e( 'Button 2 Text ', 'illdy-companion' ) ?></label>
 
 			<input type="text" value="<?php echo esc_attr( $instance['button2'] ); ?>"
 				   name="<?php echo esc_attr( $this->get_field_name( 'button2' ) ); ?>"
@@ -192,7 +192,7 @@ class Illdy_Widget_Parallax extends WP_Widget {
 		</p>
 
 		<p><label
-				for="<?php echo esc_attr( $this->get_field_id( 'button2_link' ) ); ?>"><?php esc_html_e( 'Button 2 Link ', 'illdy' ) ?></label>
+				for="<?php echo esc_attr( $this->get_field_id( 'button2_link' ) ); ?>"><?php esc_html_e( 'Button 2 Link ', 'illdy-companion' ) ?></label>
 
 			<input type="text" value="<?php echo esc_url( $instance['button2_link'] ); ?>"
 				   name="<?php echo esc_attr( $this->get_field_name( 'button2_link' ) ); ?>"
@@ -202,7 +202,7 @@ class Illdy_Widget_Parallax extends WP_Widget {
 
 		<div class="checkbox_switch">
 				<span class="customize-control-title onoffswitch_label">
-					<?php _e( 'Border bottom', 'illdy' ); ?>
+					<?php _e( 'Border bottom', 'illdy-companion' ); ?>
 				</span>
 			<div class="onoffswitch">
 				<input type="checkbox" id="<?php echo esc_attr( $this->get_field_name( 'border_bottom' ) ); ?>"
