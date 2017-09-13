@@ -147,7 +147,7 @@ class Illdy_Companion_Import_Data {
 			'_testimonials_number_of_posts'              => 4,
 			'_about_general_show'                        => 1,
 			'_about_general_title'                       => __( 'About', 'illdy-companion' ),
-			'_about_general_entry'                       => __( 'It is an amazng one-page theme with great features that offers an incredible experience. It is easy to install, make changes, adapt for your business. A modern design with clean lines and styling for a wide variety of content, exactly how a business design should be. You can add as many images as you want to the main header area and turn them into slider.', 'illdy-companion' ),
+			'_about_general_entry'                       => __( 'It is an amazing one-page theme with great features that offers an incredible experience. It is easy to install, make changes, adapt for your business. A modern design with clean lines and styling for a wide variety of content, exactly how a business design should be. You can add as many images as you want to the main header area and turn them into slider.', 'illdy-companion' ),
 			'_contact_us_general_show'                   => 1,
 			'_contact_us_general_title'                  => __( 'Contact us', 'illdy-companion' ),
 			'_contact_us_general_entry'                  => __( 'And we will get in touch as soon as possible.', 'illdy-companion' ),
