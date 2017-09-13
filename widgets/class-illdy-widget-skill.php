@@ -10,7 +10,7 @@ class Illdy_Widget_Skill extends WP_Widget {
 			'description' => __( 'Add this widget in "Front page - About Sidebar".', 'illdy-companion' ),
 		) );
 
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'admin_footer-widgets.php', array( $this, 'print_scripts' ), 9999 );
 	}
 

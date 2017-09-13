@@ -85,7 +85,6 @@ if ( ! function_exists( 'illdy_companion_customize_register' ) ) {
 
 				$wp_customize->add_control( new Epsilon_Control_Text_Editor( $wp_customize, $prefix . '_services_general_entry', array(
 					'label'       => __( 'Entry', 'illdy-companion' ),
-					'description' => __( 'Add the content for this section.', 'illdy-companion' ),
 					'section'     => $prefix . '_panel_services',
 					'priority'    => 3,
 					'type'        => 'epsilon-text-editor',
@@ -119,7 +118,6 @@ if ( ! function_exists( 'illdy_companion_customize_register' ) ) {
 
 				$wp_customize->add_control( new Epsilon_Control_Text_Editor( $wp_customize, $prefix . '_team_general_entry', array(
 					'label'       => __( 'Entry', 'illdy-companion' ),
-					'description' => __( 'Add the content for this section.', 'illdy-companion' ),
 					'section'     => $prefix . '_panel_team',
 					'priority'    => 3,
 					'type'        => 'epsilon-text-editor',
@@ -152,7 +150,6 @@ if ( ! function_exists( 'illdy_companion_customize_register' ) ) {
 
 				$wp_customize->add_control( new Epsilon_Control_Text_Editor( $wp_customize, $prefix . '_about_general_entry', array(
 					'label'       => __( 'Entry', 'illdy-companion' ),
-					'description' => __( 'Add the content for this section.', 'illdy-companion' ),
 					'section'     => $prefix . '_panel_about',
 					'priority'    => 3,
 					'type'        => 'epsilon-text-editor',
@@ -185,7 +182,6 @@ if ( ! function_exists( 'illdy_companion_customize_register' ) ) {
 
 				$wp_customize->add_control( new Epsilon_Control_Text_Editor( $wp_customize, $prefix . '_jumbotron_general_entry', array(
 					'label'       => __( 'Entry', 'illdy-companion' ),
-					'description' => __( 'The content added in this field will show below title.', 'illdy-companion' ),
 					'section'     => $prefix . '_jumbotron_general',
 					'priority'    => 5,
 					'type'        => 'epsilon-text-editor',
@@ -218,7 +214,6 @@ if ( ! function_exists( 'illdy_companion_customize_register' ) ) {
 
 				$wp_customize->add_control( new Epsilon_Control_Text_Editor( $wp_customize, $prefix . '_latest_news_general_entry', array(
 					'label'       => __( 'Entry', 'illdy-companion' ),
-					'description' => __( 'Add the content for this section.', 'illdy-companion' ),
 					'section'     => $prefix . '_latest_news_general',
 					'priority'    => 3,
 					'type'        => 'epsilon-text-editor',
@@ -251,7 +246,6 @@ if ( ! function_exists( 'illdy_companion_customize_register' ) ) {
 
 				$wp_customize->add_control( new Epsilon_Control_Text_Editor( $wp_customize, $prefix . '_projects_general_entry', array(
 					'label'       => __( 'Entry', 'illdy-companion' ),
-					'description' => __( 'Add the content for this section.', 'illdy-companion' ),
 					'section'     => $prefix . '_panel_projects',
 					'priority'    => 3,
 					'type'        => 'epsilon-text-editor',
@@ -283,7 +277,6 @@ if ( ! function_exists( 'illdy_companion_customize_register' ) ) {
 
 				$wp_customize->add_control( new Epsilon_Control_Text_Editor( $wp_customize, $prefix . '_contact_us_entry', array(
 					'label'         => __( 'Entry', 'illdy-companion' ),
-					'description'   => __( 'Add the content for this section.', 'illdy-companion' ),
 					'section'       => $prefix . '_contact_us',
 					'priority'      => 3,
 					'type'          => 'epsilon-text-editor',
