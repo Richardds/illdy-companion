@@ -78,6 +78,7 @@ class Illdy_Widget_Person extends WP_Widget {
 			'facebook_url' => '',
 			'twitter_url' => '',
 			'linkedin_url' => '',
+			'github_url' => '',
 			'color' => '#000000',
 		);
 		$instance = wp_parse_args( $instance, $defaults );
@@ -99,6 +100,7 @@ class Illdy_Widget_Person extends WP_Widget {
 					$output .= ( $instance['facebook_url'] ) ? '<li><a href="' . esc_url( $instance['facebook_url'] ) . '" title="' . __( 'Facebook', 'illdy-companion' ) . '" target="_blank" rel="nofollow"><i class="fa fa-facebook"></i></a></li>' : '';
 					$output .= ( $instance['twitter_url'] ) ? '<li><a href="' . esc_url( $instance['twitter_url'] ) . '" title="' . __( 'Twitter', 'illdy-companion' ) . '"><i class="fa fa-twitter" target="_blank" rel="nofollow"></i></a></li>' : '';
 					$output .= ( $instance['linkedin_url'] ) ? '<li><a href="' . esc_url( $instance['linkedin_url'] ) . '" title="' . __( 'LinkedIn', 'illdy-companion' ) . '"><i class="fa fa-linkedin" target="_blank" rel="nofollow"></i></a></li>' : '';
+					$output .= ( $instance['github_url'] ) ? '<li><a href="' . esc_url( $instance['github_url'] ) . '" title="' . __( 'GitHub', 'illdy-companion' ) . '"><i class="fa fa-github" target="_blank" rel="nofollow"></i></a></li>' : '';
 				$output .= '</ul><!--/.person-content-social.clearfix-->';
 			$output .= '</div><!--/.person-content-->';
 		$output .= '</div><!--/.person.clearfix-->';
@@ -125,6 +127,7 @@ class Illdy_Widget_Person extends WP_Widget {
 			'facebook_url' => '',
 			'twitter_url' => '',
 			'linkedin_url' => '',
+			'github_url' => '',
 			'color' => '#000000',
 		);
 		$instance = wp_parse_args( $instance, $defaults );
@@ -168,6 +171,11 @@ class Illdy_Widget_Person extends WP_Widget {
 		</p>
 
 		<p>
+			<label for="<?php echo $this->get_field_id( 'github_url' ); ?>"><?php _e( 'GitHub URL:', 'illdy-companion' ); ?></label>
+			<input class="widefat" id="<?php echo $this->get_field_id( 'github_url' ); ?>" name="<?php echo $this->get_field_name( 'github_url' ); ?>" type="text" value="<?php echo esc_attr( $instance['github_url'] ); ?>">
+		</p>
+
+		<p>
 			<label for="<?php echo $this->get_field_id( 'color' ); ?>"><?php _e( 'Color:', 'illdy-companion' ); ?></label><br>
 			<input type="text" name="<?php echo $this->get_field_name( 'color' ); ?>" class="color-picker" id="<?php echo $this->get_field_id( 'color' ); ?>" value="<?php echo esc_attr( $instance['color'] ); ?>" data-default-color="#000000" />
 		</p>
@@ -193,6 +201,7 @@ class Illdy_Widget_Person extends WP_Widget {
 		$instance['facebook_url'] = ( ! empty( $new_instance['facebook_url'] ) ? esc_url_raw( $new_instance['facebook_url'] ) : '' );
 		$instance['twitter_url'] = ( ! empty( $new_instance['twitter_url'] ) ? esc_url_raw( $new_instance['twitter_url'] ) : '' );
 		$instance['linkedin_url'] = ( ! empty( $new_instance['linkedin_url'] ) ? esc_url_raw( $new_instance['linkedin_url'] ) : '' );
+		$instance['github_url'] = ( ! empty( $new_instance['github_url'] ) ? esc_url_raw( $new_instance['github_url'] ) : '' );
 		$instance['color'] = ( ! empty( $new_instance['color'] ) ? sanitize_text_field( $new_instance['color'] ) : '' );
 
 		return $instance;
