@@ -19,6 +19,7 @@
     "wp": false,
     "welcomeScreen" : false,
     "ajaxurl" : false,
-    "console" : false
+    "console" : false,
+    "tinymce" : false
   }
 }
