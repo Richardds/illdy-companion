@@ -38,7 +38,46 @@ module.exports = function( grunt ) {
             expand: true
           } ]
       }
-    }
+    },
+    clean: {
+        init: {
+            src: ['build/']
+        },
+    },
+    copy: {
+        build: {
+            expand: true,
+            src: [
+                '**',
+                '!node_modules/**',
+                '!vendor/**',
+                '!build/**',
+                '!readme.md',
+                '!README.md',
+                '!phpcs.ruleset.xml',
+                '!Gruntfile.js',
+                '!package.json',
+                '!composer.json',
+                '!composer.lock',
+                '!set_tags.sh',
+                '!illdy-companion.zip',
+                '!nbproject/**' ],
+            dest: 'build/'
+        }
+    },
+
+    compress: {
+        build: {
+            options: {
+                pretty: true,                           // Pretty print file sizes when logging.
+                archive: '<%= pkg.name %>.zip'
+            },
+            expand: true,
+            cwd: 'build/',
+            src: ['**/*'],
+            dest: '<%= pkg.name %>/'
+        }
+    },
 
   } );
 
@@ -46,5 +85,13 @@ module.exports = function( grunt ) {
   grunt.registerTask( 'textdomain', [
     'checktextdomain'
   ] );
+
+  // Build task
+    grunt.registerTask( 'build-archive', [
+        'clean:init',
+        'copy',
+        'compress:build',
+        'clean:init'
+    ]);
 
 };
