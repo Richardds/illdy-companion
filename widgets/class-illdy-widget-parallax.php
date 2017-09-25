@@ -51,7 +51,7 @@ class Illdy_Widget_Parallax extends WP_Widget {
 		<section class="<?php echo esc_attr( $class1 ); ?>"><?php
 		if ( ( 'background-full' == $instance['image_pos'] || 'background-small' == $instance['image_pos'] ) && '' != $instance['image_src'] ) { ?>
 			<div class="parallax-window <?php echo esc_attr( $class7 ); ?>" data-parallax="scroll"
-				 data-image-src="<?php echo esc_url( $instance['image_src'] ); ?>">
+				 data-image-src="<?php echo esc_url( $instance['image_src'] ); ?>" data-ios-fix="true" data-over-scroll-fix="true" data-android-fix="true">
 				<div class="<?php echo ('background-full' == $instance['image_pos']) ? 'align-transform' : ''; ?>">
 					<?php } else { ?>
 					<div class="container">
