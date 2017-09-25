@@ -57,7 +57,7 @@ You can still use Illdy theme without this plugin but you won't be able to impor
 
 == Changelog ==
 
-= 1.0.9 =
+= 2.0.3 =
  * Add TinyMCE instead of Textarea in Illdy Widgets ( https://github.com/puikinsh/illdy/issues/222 )
 
 = 1.0.6 = 
