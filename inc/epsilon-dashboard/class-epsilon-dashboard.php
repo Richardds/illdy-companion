@@ -6,8 +6,7 @@ if ( ! class_exists( 'Epsilon_Dashboard' ) ) {
 	/**
 	 * Dashboard Widget
 	 */
-	final class Epsilon_Dashboard {
-
+	final class Epsilon_Dashboard{
 		/**
 		 * The script version
 		 *
@@ -20,14 +19,12 @@ if ( ! class_exists( 'Epsilon_Dashboard' ) ) {
 		 * @var string The URL of the script
 		 */
 		public $script_url;
-
 		/**
 		 * The class instance
 		 *
 		 * @var Epsilon_Dashboard The singleton instance of the class
 		 */
 		public static $instance;
-
 		/**
 		 * The title of the widget
 		 *
@@ -69,8 +66,8 @@ if ( ! class_exists( 'Epsilon_Dashboard' ) ) {
 		 * Load hooks to show the widget
 		 */
 		public function load_hooks() {
-			add_action( 'wp_dashboard_setup', array( &$this, 'add_widget' ) );
-			add_action( 'wp_network_dashboard_setup', array( &$this, 'add_widget' ) );
+			add_action( 'wp_dashboard_setup', [ &$this, 'add_widget' ] );
+			add_action( 'wp_network_dashboard_setup', [ &$this, 'add_widget' ] );
 		}
 
 		/**
@@ -110,9 +107,9 @@ if ( ! class_exists( 'Epsilon_Dashboard' ) ) {
 			$feed->set_cache_class( 'WP_Feed_Cache' );
 			$feed->set_file_class( 'WP_SimplePie_File' );
 			$feed->set_cache_duration( apply_filters( 'wp_feed_cache_transient_lifetime', 7200, $this->feeds ) );
-			do_action_ref_array( 'wp_feed_options', array( $feed, $this->feeds ) );
+			do_action_ref_array( 'wp_feed_options', [ $feed, $this->feeds ] );
 			$feed->strip_comments( true );
-			$feed->strip_htmltags( array(
+			$feed->strip_htmltags( [
 				'base',
 				'blink',
 				'body',
@@ -132,20 +129,23 @@ if ( ! class_exists( 'Epsilon_Dashboard' ) ) {
 				'param',
 				'script',
 				'style',
-			) );
+			] );
 			$feed->init();
 			$feed->handle_content_type();
 			$items = $feed->get_items( 0, 5 );
-			$this->items = array();
+			$this->items = [];
 			foreach ( (array) $items as $item ) {
-				$this->items[] = array(
+				$this->items[] = [
 					'title' => $item->get_title(),
 					'date'  => $item->get_date( 'U' ),
 					'link'  => $item->get_permalink(),
-				);
+				];
 			}
 			if ( ! empty( $this->items ) ) {
-				wp_add_dashboard_widget( 'epsilon_dashboard', $this->dashboard_name, array( &$this, 'render_dashboard_widget' ) );
+				wp_add_dashboard_widget( 'epsilon_dashboard', $this->dashboard_name, [
+					&$this,
+					'render_dashboard_widget',
+				] );
 			}
 		}
 
@@ -154,71 +154,70 @@ if ( ! class_exists( 'Epsilon_Dashboard' ) ) {
 		 */
 		function render_dashboard_widget() {
 			?>
-			<style type="text/css">
+            <style type="text/css">
 
-				.epsilon-dw-feed-item {
-					display: flex;
-					align-items: center;
-				}
+                .epsilon-dw-feed-item {
+                    display: flex;
+                    align-items: center;
+                }
 
-				.epsilon-dw-feed-item a {
-					float: left;
-					width: 89.9%;
-				}
+                .epsilon-dw-feed-item a {
+                    float: left;
+                    width: 89.9%;
+                }
 
-				.epsilon-dw-feed-item .epsilon-dw-day-container {
-					width: 100%;
-					letter-spacing: 3px;
-					display: block;
-				}
+                .epsilon-dw-feed-item .epsilon-dw-day-container {
+                    width: 100%;
+                    letter-spacing: 3px;
+                    display: block;
+                }
 
-				.epsilon-dw-feed-item .epsilon-dw-month-container {
+                .epsilon-dw-feed-item .epsilon-dw-month-container {
 
-					width: 100%;
-					display: block;
-					font-weight: 600;
-					padding: 0px;
-					margin-top: -6px;
-					text-transform: uppercase;
-					font-size: 10px;
-					letter-spacing: 1px;
-				}
+                    width: 100%;
+                    display: block;
+                    font-weight: 600;
+                    padding: 0px;
+                    margin-top: -6px;
+                    text-transform: uppercase;
+                    font-size: 10px;
+                    letter-spacing: 1px;
+                }
 
-				.epsilon-dw-feed-item .epsilon-dw-date-container {
-					float: left;
-					min-height: 30px;
-					margin-right: 0.1%;
-					width: 10%;
-					text-align: center;
-				}
+                .epsilon-dw-feed-item .epsilon-dw-date-container {
+                    float: left;
+                    min-height: 30px;
+                    margin-right: 0.1%;
+                    width: 10%;
+                    text-align: center;
+                }
 
-			</style>
-			<ul>
+            </style>
+            <ul>
 				<?php
 				if ( ! empty( $this->items ) ) {
 					foreach ( $this->items as $item ) {
-						$query_args = array(
+						$query_args = [
 							'utm_campaign' => 'feed',
 							'utm_medium'   => 'dashboard_widget',
-						);
+						];
 						?>
-						<li class="epsilon-dw-feed-item">
+                        <li class="epsilon-dw-feed-item">
 							<span class="epsilon-dw-date-container">
 								<span class="epsilon-dw-day-container"><?php echo date( 'd', $item['date'] ); ?></span> 
 								<span class="epsilon-dw-month-container"><?php echo substr( date( 'M', $item['date'] ), 0, 3 ); ?></span>
 							</span>
-							<a href="<?php echo add_query_arg( $query_args, $item['link'] ); ?>" target="_blank"><?php echo $item['title']; ?></a>
-							<div class="clear"></div>
-						</li>
+                            <a href="<?php echo add_query_arg( $query_args, $item['link'] ); ?>" target="_blank"><?php echo $item['title']; ?></a>
+                            <div class="clear"></div>
+                        </li>
 						<?php
 					}
 				}
 				?>
-			</ul>
+            </ul>
 
 			<?php
 
 		}
 	}
-
 }// End if().

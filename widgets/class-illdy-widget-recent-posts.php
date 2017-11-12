@@ -1,14 +1,13 @@
 <?php
 
-class Illdy_Widget_Recent_Posts extends WP_Widget {
-
+class Illdy_Widget_Recent_Posts extends WP_Widget{
 	/**
 	 * Register widget with WordPress.
 	 */
 	function __construct() {
-		parent::__construct( 'illdy_recent_posts', __( '[Illdy] - Recent Posts', 'illdy-companion' ), array(
+		parent::__construct( 'illdy_recent_posts', __( '[Illdy] - Recent Posts', 'illdy-companion' ), [
 			'description' => __( 'Thiw widget will display the latest posts with thumbnail image on the left side.', 'illdy-companion' ),
-		) );
+		] );
 	}
 
 	/**
@@ -16,24 +15,24 @@ class Illdy_Widget_Recent_Posts extends WP_Widget {
 	 *
 	 * @see WP_Widget::widget()
 	 *
-	 * @param array $args     Widget arguments.
+	 * @param array $args Widget arguments.
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
 		echo $args['before_widget'];
 
-		$defaults = array(
-			'title' => '',
+		$defaults = [
+			'title'         => '',
 			'display_title' => '',
 			'numberofposts' => 4,
-		);
+		];
 		$instance = wp_parse_args( $instance, $defaults );
 
 		if ( $instance['display_title'] ) {
 			echo $args['before_title'] . esc_html( $instance['title'] ) . $args['after_title'];
 		}
 
-		$post_query_args = array(
+		$post_query_args = [
 			'post_type'              => 'post',
 			'pagination'             => false,
 			'posts_per_page'         => absint( $instance['numberofposts'] ),
@@ -41,7 +40,7 @@ class Illdy_Widget_Recent_Posts extends WP_Widget {
 			'cache_results'          => true,
 			'update_post_meta_cache' => true,
 			'update_post_term_cache' => true,
-		);
+		];
 
 		$post_query = new WP_Query( $post_query_args );
 
@@ -52,15 +51,14 @@ class Illdy_Widget_Recent_Posts extends WP_Widget {
 				global $post;
 
 				$output = '<div class="widget-recent-post clearfix">';
-					$output .= ( has_post_thumbnail( $post->ID ) ? '<div class="recent-post-image">' : '' );
-						$output .= ( has_post_thumbnail( $post->ID ) ? get_the_post_thumbnail( $post->ID, 'illdy-widget-recent-posts' ) : '' );
-					$output .= ( has_post_thumbnail( $post->ID ) ? '</div><!--/.recent-post-image-->' : '' );
-					$output .= '<a href="' . esc_url( get_the_permalink() ) . '" title="' . esc_attr( get_the_title() ) . '" class="recent-post-title">' . esc_html( get_the_title() ) . '</a>';
-					$output .= '<a href="' . esc_url( get_the_permalink() ) . '" title="' . __( 'More...', 'illdy-companion' ) . '" class="recent-post-button">' . __( 'More...', 'illdy-companion' ) . '</a>';
+				$output .= ( has_post_thumbnail( $post->ID ) ? '<div class="recent-post-image">' : '' );
+				$output .= ( has_post_thumbnail( $post->ID ) ? get_the_post_thumbnail( $post->ID, 'illdy-widget-recent-posts' ) : '' );
+				$output .= ( has_post_thumbnail( $post->ID ) ? '</div><!--/.recent-post-image-->' : '' );
+				$output .= '<a href="' . esc_url( get_the_permalink() ) . '" title="' . esc_attr( get_the_title() ) . '" class="recent-post-title">' . esc_html( get_the_title() ) . '</a>';
+				$output .= '<a href="' . esc_url( get_the_permalink() ) . '" title="' . __( 'More...', 'illdy-companion' ) . '" class="recent-post-button">' . __( 'More...', 'illdy-companion' ) . '</a>';
 				$output .= '</div><!--/.widget-recent-post.clearfix-->';
 
 				echo $output;
-
 			}
 		} else {
 			echo __( 'No posts found.', 'illdy-companion' );
@@ -80,34 +78,32 @@ class Illdy_Widget_Recent_Posts extends WP_Widget {
 	 */
 	public function form( $instance ) {
 
-		$defaults = array(
-			'title' => __( '[Illdy] - Recent Posts', 'illdy-companion' ),
+		$defaults = [
+			'title'         => __( '[Illdy] - Recent Posts', 'illdy-companion' ),
 			'display_title' => '',
 			'numberofposts' => 4,
-		);
+		];
 		$instance = wp_parse_args( $instance, $defaults );
 
 		?>
 
-		<div class="checkbox_switch" style="margin-top:15px;margin-bottom: 0;">
-			<span class="customize-control-title onoffswitch_label"><?php _e( 'Display title?', 'illdy-companion' ); ?></span>
-			<div class="onoffswitch">
-				<input type="checkbox" id="<?php echo $this->get_field_id( 'display_title' ); ?>"
-					   name="<?php echo $this->get_field_name( 'display_title' ); ?>" class="onoffswitch-checkbox"
-					   value="1" <?php checked( $instance['display_title'] ); ?>>
-				<label class="onoffswitch-label" for="<?php echo $this->get_field_id( 'display_title' ); ?>"></label>
-			</div>
-		</div>
+        <div class="checkbox_switch" style="margin-top:15px;margin-bottom: 0;">
+            <span class="customize-control-title onoffswitch_label"><?php _e( 'Display title?', 'illdy-companion' ); ?></span>
+            <div class="onoffswitch">
+                <input type="checkbox" id="<?php echo $this->get_field_id( 'display_title' ); ?>" name="<?php echo $this->get_field_name( 'display_title' ); ?>" class="onoffswitch-checkbox" value="1" <?php checked( $instance['display_title'] ); ?>>
+                <label class="onoffswitch-label" for="<?php echo $this->get_field_id( 'display_title' ); ?>"></label>
+            </div>
+        </div>
 
-		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'illdy-companion' ); ?></label>
-			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $instance['title'] ); ?>">
-		</p>
+        <p>
+            <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'illdy-companion' ); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $instance['title'] ); ?>">
+        </p>
 
-		<p>
-			<label for="<?php echo $this->get_field_id( 'numberofposts' ); ?>"><?php _e( 'Number of posts:', 'illdy-companion' ); ?></label>
-			<input class="widefat" id="<?php echo $this->get_field_id( 'numberofposts' ); ?>" name="<?php echo $this->get_field_name( 'numberofposts' ); ?>" type="number" value="<?php echo esc_attr( $instance['numberofposts'] ); ?>">
-		</p>
+        <p>
+            <label for="<?php echo $this->get_field_id( 'numberofposts' ); ?>"><?php _e( 'Number of posts:', 'illdy-companion' ); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id( 'numberofposts' ); ?>" name="<?php echo $this->get_field_name( 'numberofposts' ); ?>" type="number" value="<?php echo esc_attr( $instance['numberofposts'] ); ?>">
+        </p>
 		<?php
 	}
 
@@ -122,17 +118,17 @@ class Illdy_Widget_Recent_Posts extends WP_Widget {
 	 * @return array Updated safe values to be saved.
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance = array();
+		$instance                  = [];
 		$instance['display_title'] = $new_instance['display_title'];
-		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? wp_kses_post( $new_instance['title'] ) : '';
+		$instance['title']         = ( ! empty( $new_instance['title'] ) ) ? wp_kses_post( $new_instance['title'] ) : '';
 		$instance['numberofposts'] = ( ! empty( $new_instance['numberofposts'] ) ? absint( $new_instance['numberofposts'] ) : '' );
 
 		return $instance;
 	}
-
 }
 
 function illdy_register_widget_recent_posts() {
 	register_widget( 'Illdy_Widget_Recent_Posts' );
 }
+
 add_action( 'widgets_init', 'illdy_register_widget_recent_posts' );
