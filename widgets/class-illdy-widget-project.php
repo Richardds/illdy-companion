@@ -31,40 +31,24 @@ class Illdy_Widget_Project extends WP_Widget{
 	public function widget( $args, $instance ) {
 		echo $args['before_widget'];
 
-		$lightbox = get_theme_mod( 'illdy_projects_lightbox', false );
-
 		$defaults = [
-			'title' => '',
-			'url'   => '',
-			'image' => '',
+			'title'       => '',
+			'url'         => '',
+			'image'       => '',
+			'description' => '',
 		];
+
 		$instance = wp_parse_args( $instance, $defaults );
 
 		$image_id                 = illdy_get_image_id_from_image_url( $instance['image'] );
 		$get_attachment_image_src = wp_get_attachment_image_src( $image_id, 'illdy-front-page-projects' );
+		$img_src                  = $image_id ? esc_url( $get_attachment_image_src[0] ) : esc_url( $instance['image'] );
 
-		$class = 'project';
-
-		if ( '' == $instance['url'] ) {
-			$class .= ' no-url';
-		}
-		$attr = '';
-
-		if ( $lightbox ) {
-			if ( $image_id ) {
-				$url = wp_get_attachment_image_src( $image_id, 'full' );
-				$url = $url[0];
-			} else {
-				$url = $instance['image'];
-			}
-
-			$class .= ' fancybox';
-			$attr  = ' rel="projects-gallery"';
-		} else {
-			$url = $instance['url'];
-		}
-
-		$output = '<a href="' . esc_url( $url ) . '" title="' . esc_attr( $instance['title'] ) . '" class="' . $class . '"' . $attr . ' style="background-image: url(' . ( $image_id ? esc_url( $get_attachment_image_src[0] ) : esc_url( $instance['image'] ) ) . ');"><span class="project-overlay"></span></a>';
+		$output = '<a class="project" href="' . esc_url( $instance['url'] ) . '" title="' . esc_html( $instance['title'] ) . '" style="background-image: url(' . $img_src . '); height: 299px;">';
+		$output .= '  <div class="project_description_layer">';
+		$output .= '    <p class="project_description">' . wp_kses_post( $instance['description'] ) . '</p>';
+		$output .= '  </div>';
+		$output .= '</a>';
 
 		echo $output;
 
@@ -81,9 +65,10 @@ class Illdy_Widget_Project extends WP_Widget{
 	public function form( $instance ) {
 
 		$defaults = [
-			'title' => __( '[Illdy] - Project', 'illdy-companion' ),
-			'url'   => '',
-			'image' => get_template_directory_uri() . '/layout/images/front-page/front-page-project-1.jpg',
+			'title'       => __( '[Illdy] - Project', 'illdy-companion' ),
+			'url'         => '',
+			'image'       => get_template_directory_uri() . '/layout/images/front-page/front-page-project-1.jpg',
+			'description' => '',
 		];
 		$instance = wp_parse_args( $instance, $defaults );
 
@@ -103,6 +88,11 @@ class Illdy_Widget_Project extends WP_Widget{
             <label for="<?php echo $this->get_field_id( 'url' ); ?>"><?php _e( 'URL:', 'illdy-companion' ); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id( 'url' ); ?>" name="<?php echo $this->get_field_name( 'url' ); ?>" type="text" value="<?php echo esc_attr( $instance['url'] ); ?>">
         </p>
+
+        <p class="illdy-editor-container">
+            <label for="<?php echo $this->get_field_id( 'description' ); ?>"><?php _e( 'Description:', 'illdy-companion' ); ?></label>
+            <textarea name="<?php echo esc_attr( $this->get_field_name( 'description' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'description' ) ); ?>" class="widefat"><?php echo wp_kses_post( $instance['description'] ); ?></textarea>
+        </p>
 		<?php
 	}
 
@@ -117,10 +107,11 @@ class Illdy_Widget_Project extends WP_Widget{
 	 * @return array Updated safe values to be saved.
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance          = [];
-		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? sanitize_text_field( $new_instance['title'] ) : '';
-		$instance['image'] = ! empty( $new_instance['image'] ) ? esc_url_raw( $new_instance['image'] ) : '';
-		$instance['url']   = ( ! empty( $new_instance['url'] ) ? esc_url_raw( $new_instance['url'] ) : '' );
+		$instance                = [];
+		$instance['title']       = ( ! empty( $new_instance['title'] ) ) ? sanitize_text_field( $new_instance['title'] ) : '';
+		$instance['image']       = ! empty( $new_instance['image'] ) ? esc_url_raw( $new_instance['image'] ) : '';
+		$instance['url']         = ( ! empty( $new_instance['url'] ) ? esc_url_raw( $new_instance['url'] ) : '' );
+		$instance['description'] = ( ! empty( $new_instance['description'] ) ) ? wp_kses_post( $new_instance['description'] ) : '';
 
 		return $instance;
 	}
