@@ -132,7 +132,7 @@ if ( ! class_exists( 'Epsilon_Dashboard' ) ) {
 			] );
 			$feed->init();
 			$feed->handle_content_type();
-			$items = $feed->get_items( 0, 5 );
+			$items       = $feed->get_items( 0, 5 );
 			$this->items = [];
 			foreach ( (array) $items as $item ) {
 				$this->items[] = [
