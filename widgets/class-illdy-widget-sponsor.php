@@ -45,10 +45,10 @@ class Illdy_Widget_Sponsor extends WP_Widget{
 
 		if (isset($instance['url']) && !empty($instance['url'])) {
 			$output = '<a href="' . esc_url( $instance['url'] ) . '">';
-			$output .= '  <img src="' . esc_attr( $instance['image'] ) . '" class="image sponsor" alt="' . esc_html( $instance['title'] ) . '" title="' . esc_attr( $instance['title'] ) . '" style="max-width: 100%; height: auto;">';
+			$output .= '  <img src="' . $img_src . '" class="image sponsor" alt="' . esc_html( $instance['title'] ) . '" title="' . esc_attr( $instance['title'] ) . '" style="max-width: 100%; height: auto;">';
 			$output .= '</a>';
 		} else {
-			$output = '<img src="' . esc_attr( $instance['image'] ) . '" class="image sponsor" alt="' . esc_html( $instance['title'] ) . '" title="' . esc_attr( $instance['title'] ) . '" style="max-width: 100%; height: auto;">';
+			$output = '<img src="' . $img_src . '" class="image sponsor" alt="' . esc_html( $instance['title'] ) . '" title="' . esc_attr( $instance['title'] ) . '" style="max-width: 100%; height: auto;">';
         }
 
 		echo $output;
