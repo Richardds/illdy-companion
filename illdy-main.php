@@ -12,6 +12,7 @@ require_once plugin_dir_path( __FILE__ ) . 'inc/class-illdy-companion-import-dat
 require_once plugin_dir_path( __FILE__ ) . 'widgets/class-illdy-widget-recent-posts.php';
 require_once plugin_dir_path( __FILE__ ) . 'widgets/class-illdy-widget-skill.php';
 require_once plugin_dir_path( __FILE__ ) . 'widgets/class-illdy-widget-project.php';
+require_once plugin_dir_path( __FILE__ ) . 'widgets/class-illdy-widget-sponsor.php';
 require_once plugin_dir_path( __FILE__ ) . 'widgets/class-illdy-widget-service.php';
 require_once plugin_dir_path( __FILE__ ) . 'widgets/class-illdy-widget-counter.php';
 require_once plugin_dir_path( __FILE__ ) . 'widgets/class-illdy-widget-person.php';
@@ -154,6 +155,34 @@ if ( ! function_exists( 'illdy_companion_customize_register' ) ) {
 					'label'       => __( 'Entry', 'illdy-companion' ),
 					'description' => __( 'Add the content for this section.', 'illdy-companion' ),
 					'section'     => $prefix . '_panel_about',
+					'priority'    => 3,
+					'type'        => 'textarea',
+				] );
+			}
+		}
+
+		if ( ! $wp_customize->get_setting( $prefix . '_sponsors_general_entry' ) ) {
+
+			$wp_customize->add_setting( $prefix . '_sponsors_general_entry', [
+				'sanitize_callback' => 'wp_kses_post',
+				'default'           => __( 'It is an amazing one-page theme with great features that offers an incredible experience. It is easy to install, make changes, adapt for your business. A modern design with clean lines and styling for a wide variety of content, exactly how a business design should be. You can add as many images as you want to the main header area and turn them into slider.', 'illdy-companion' ),
+				'transport'         => 'postMessage',
+			] );
+
+			if ( class_exists( 'Epsilon_Control_Text_Editor' ) ) {
+
+				$wp_customize->add_control( new Epsilon_Control_Text_Editor( $wp_customize, $prefix . '_sponsors_general_entry', [
+					'label'    => __( 'Entry', 'illdy-companion' ),
+					'section'  => $prefix . '_panel_sponsors',
+					'priority' => 3,
+					'type'     => 'epsilon-text-editor',
+				] ) );
+			} else {
+
+				$wp_customize->add_control( $prefix . '_sponsors_general_entry', [
+					'label'       => __( 'Entry', 'illdy-companion' ),
+					'description' => __( 'Add the content for this section.', 'illdy-companion' ),
+					'section'     => $prefix . '_panel_sponsors',
 					'priority'    => 3,
 					'type'        => 'textarea',
 				] );
