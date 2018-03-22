@@ -44,7 +44,7 @@ class Illdy_Widget_Project extends WP_Widget{
 		$get_attachment_image_src = wp_get_attachment_image_src( $image_id, 'illdy-front-page-projects' );
 		$img_src                  = $image_id ? esc_url( $get_attachment_image_src[0] ) : esc_url( $instance['image'] );
 
-		$output = '<a class="project" href="' . esc_url( $instance['url'] ) . '" title="' . esc_html( $instance['title'] ) . '" style="background-image: url(' . $img_src . '); height: 299px;">';
+		$output = '<a class="project" href="' . (!empty($instance['url']) ? esc_url( $instance['url'] ) : '#projects') .  '" title="' . esc_html( $instance['title'] ) . '" style="background-image: url(' . $img_src . '); height: 299px;">';
 		$output .= '  <div class="project_description_layer">';
 		$output .= '    <p class="project_description">' . wp_kses_post( $instance['description'] ) . '</p>';
 		$output .= '  </div>';
